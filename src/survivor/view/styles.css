@@ -1,0 +1,53 @@
+#pane {
+    -fx-background-color: #505050;
+}
+
+#textField, #inputField, #lastInput, #textField .content, #lastInput .content{
+    -fx-font-family: Consolas;
+    -fx-font-size: 16px;
+    -fx-text-fill: #bbb;
+    -fx-highlight-text-fill: #000000;
+    -fx-highlight-fill: #bbb;
+    -fx-background-color: #000000;
+    -fx-border-radius: 0;
+}
+
+#lastInput .content, #lastInput {
+    -fx-font-family: Calibri;
+    -fx-font-style: italic;
+    -fx-font-size: 15px;
+    -fx-text-fill: #afada1;
+    -fx-highlight-text-fill: #000000;
+    -fx-highlight-fill: #afada1;
+}
+
+#inputField .content, #inputField {
+    -fx-text-fill: #009b00;
+    -fx-highlight-text-fill: #000000;
+    -fx-highlight-fill: #009b00;
+}
+
+#timeLabel, #healthLabel, #temperatureLabel, #dayLabel {
+    -fx-font-family: Calibri;
+    -fx-font-size: 16px;
+    -fx-text-fill: #fffdf1;
+    -fx-border-width: 0px;
+    -fx-background-color: #000000;
+}
+
+#parametersPanel, #dayPanel {
+    -fx-border-width: 3px;
+    -fx-border-color: black;
+    -fx-border-radius: 5px;
+    /*-fx-background-color: #a8a8a8;*/
+}
+
+#time, #health, #temperature {
+    -fx-font-size: 14px;
+    -fx-fill: #fff;
+
+}
+
+#day {
+    -fx-font-size: 26px;
+}
