@@ -2,25 +2,25 @@ package survivor.model.gameElements.sections.home;
 
 import org.apache.log4j.Logger;
 import survivor.model.gameBasics.Game;
-import survivor.model.gameElements.Elements;
-import survivor.model.gameElements.items.CommonItem;
+import survivor.model.gameElements.items.ContainableItem;
+import survivor.model.gameElements.items.TakeableItem;
 import survivor.model.gameElements.sections.Section;
-import survivor.model.gameElements.things.CommonThing;
 import survivor.model.gameStatus.HomeStatus;
-import survivor.model.processing.*;
+import survivor.model.processing.Files;
+import survivor.model.processing.Reader;
 
 import java.util.ArrayList;
 
-public class HomeBedroom extends Section implements Elements, Commands {
+public class HomeBedroom extends Section {
     private static final Logger LOG = Logger.getLogger(HomeBedroom.class);
 
     public HomeBedroom() {
         super(HomeStatus.BEDROOM, true, true);
         sectionDescriptions = Reader.readLocationFromFile(Files.HOME_BEDROOM);
 
-        addSectionItem(new CommonItem(CLOCK, 3, Files.BEDROOM_CLOCK));
-        sectionThings.add(new CommonThing(WINDOW, new ArrayList<>(), false, Files.BEDROOM_WINDOW));
-        sectionThings.add(new CommonThing(BED, new ArrayList<>(), false, Files.BEDROOM_BED));
+        addSectionItem(new TakeableItem(CLOCK, 3, false, Files.BEDROOM_CLOCK));
+        sectionThings.add(new ContainableItem(WINDOW, new ArrayList<>(), false, Files.BEDROOM_WINDOW));
+        sectionThings.add(new ContainableItem(BED, new ArrayList<>(), false, Files.BEDROOM_BED));
 
         addToAllDescriptions(SECTION, sectionDescriptions);
         addToAllDescriptions(WINDOW, getAllDescriptionsOfThink(WINDOW));

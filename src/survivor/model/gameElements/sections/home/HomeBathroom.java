@@ -3,17 +3,16 @@ package survivor.model.gameElements.sections.home;
 import org.apache.log4j.Logger;
 import survivor.model.gameBasics.Game;
 import survivor.model.gameBasics.Player;
-import survivor.model.gameElements.Elements;
-import survivor.model.gameElements.items.CommonItem;
-import survivor.model.gameElements.items.Item;
+import survivor.model.gameElements.items.ContainableItem;
+import survivor.model.gameElements.items.TakeableItem;
 import survivor.model.gameElements.sections.Section;
-import survivor.model.gameElements.things.CommonThing;
 import survivor.model.gameStatus.HomeStatus;
-import survivor.model.processing.*;
+import survivor.model.processing.Files;
+import survivor.model.processing.Reader;
 
 import java.util.ArrayList;
 
-public class HomeBathroom extends Section implements Elements, Commands {
+public class HomeBathroom extends Section {
     private static final Logger LOG = Logger.getLogger(HomeBathroom.class);
 
     private final int CUPBOARD_OPENING = 1;
@@ -28,10 +27,10 @@ public class HomeBathroom extends Section implements Elements, Commands {
         super(HomeStatus.BATHROOM, true, true);
         sectionDescriptions = Reader.readLocationFromFile(Files.HOME_BATHROOM);
 
-        ArrayList<Item> items = new ArrayList<>();
-        items.add(new CommonItem(KEY, .2, Files.BATHROOM_AID_KIT_KEY));
-        sectionThings.add(new CommonThing(AID_KIT, items, false, Files.BATHROOM_AID_KIT));
-        sectionThings.add(new CommonThing(CUPBOARD_S, new ArrayList<>(), true, Files.BATHROOM_CUPBOARD));
+        ArrayList<TakeableItem> items = new ArrayList<>();
+        items.add(new TakeableItem(KEY, .2, true, Files.BATHROOM_AID_KIT_KEY));
+        sectionThings.add(new ContainableItem(AID_KIT, items, false, Files.BATHROOM_AID_KIT));
+        sectionThings.add(new ContainableItem(CUPBOARD_S, new ArrayList<>(), true, Files.BATHROOM_CUPBOARD));
 
         addToAllDescriptions(SECTION, sectionDescriptions);
         addToAllDescriptions(AID_KIT, getAllDescriptionsOfThink(AID_KIT));

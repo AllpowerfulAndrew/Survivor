@@ -6,13 +6,11 @@ import java.util.ArrayList;
 
 public abstract class Item {
     public String name;
-    public double weight;
     private String file;
     private ArrayList<String> descriptions;
 
-    public Item(String name, double weight, String file) {
+    public Item(String name, String file) {
         this.name = name;
-        this.weight = weight;
         this.file = file;
         descriptions = Reader.readLocationFromFile(file);
     }

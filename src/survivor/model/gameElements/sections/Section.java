@@ -4,8 +4,9 @@ import org.apache.log4j.Logger;
 import survivor.model.gameBasics.Game;
 import survivor.model.gameBasics.Player;
 import survivor.model.gameElements.Elements;
+import survivor.model.gameElements.items.ContainableItem;
 import survivor.model.gameElements.items.Item;
-import survivor.model.gameElements.things.Thing;
+import survivor.model.gameElements.items.TakeableItem;
 import survivor.model.gameStatus.HomeStatus;
 import survivor.model.gameStatus.StoryStatus;
 import survivor.model.processing.Commands;
@@ -29,9 +30,9 @@ public abstract class Section implements Commands, Elements {
     public final String SECTION;
     private final boolean IS_ROOM;
     private final boolean INHABITED;
-    private List<Item> sectionItems;
-    private List<Item> droppedItems;
-    protected List<Thing> sectionThings;
+    private List<TakeableItem> sectionItems;
+    private List<TakeableItem> droppedItems;
+    protected List<ContainableItem> sectionThings;
     protected ArrayList<String> sectionDescriptions;
     private final HashMap<String, ArrayList<String>> allDescriptions = new HashMap<>();
 
@@ -45,17 +46,17 @@ public abstract class Section implements Commands, Elements {
         INHABITED = inhabited;
     }
 
-    public Thing getSectionThing(String name) {
-        for (Thing t : sectionThings) {
-            if (t.name.equals(name)) {
-                return t;
+    public Item getSectionThing(String name) {
+        for (Item i : sectionThings) {
+            if (i.name.equals(name)) {
+                return i;
             }
         }
 
         throw new IllegalArgumentException();
     }
 
-    public Thing getThingByName(String name) {
+    public ContainableItem getThingByName(String name) {
         LOG.info("Получаем вещь по имени");
         for (int i = 0; i < sectionThings.size(); i++) {
             if (sectionThings.get(i).name.equals(name)) return sectionThings.get(i);
@@ -146,7 +147,7 @@ public abstract class Section implements Commands, Elements {
         return getThingItemByName(think, item).getDescriptionsList();
     }
 
-    public void addSectionItem(Item item) {
+    public void addSectionItem(TakeableItem item) {
         sectionItems.add(item);
     }
 
@@ -154,8 +155,8 @@ public abstract class Section implements Commands, Elements {
         allDescriptions.put(name, descriptions);
     }
 
-    public void changeThing(Thing thing) {
-        for (Thing t : sectionThings)
+    public void changeContaineableItem(ContainableItem thing) {
+        for (Item t : sectionThings)
             if (t.name.equals(thing.name))
                 if (!t.equals(thing)) {
                     sectionThings.remove(t);
@@ -291,8 +292,8 @@ public abstract class Section implements Commands, Elements {
     private String twoCommand(String[] command) {
         if (isLastMessageWasInventory()) {
             LOG.info("Осматриваем предмет из инвенторя");
-            if ((command[FIRST].equals(INSPECT) || command[SECOND].equals(INSPECT_S)) && Player.doesHaveItem(command[SECOND]))
-                return Player.getItemDescription(command[FIRST]);
+            if ((command[FIRST].equals(INSPECT) || command[FIRST].equals(INSPECT_S)) && Player.doesHaveItem(command[SECOND]))
+                return Player.getItemDescription(command[SECOND]);
         }
 
         if (command[FIRST].equals(TAKE) || command[FIRST].equals(TAKE_S))

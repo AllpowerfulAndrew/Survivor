@@ -18,24 +18,22 @@ public interface Files {
     String HOME_STAIRCASE_UP = "home/sections/staircaseUp";
     String HOME_ROOF = "home/sections/roof";
 
-    //Home Things
-    String BEDROOM_WINDOW = "home/things/bedroomWindow";
-    String BEDROOM_BED = "home/things/bedroomBed";
-    String LIVING_ROOM_CUPBOARD = "home/things/livingRoomCupboard";
-    String LIVING_ROOM_WINDOW = "home/things/livingRoomWindow";
-    String HALLWAY_DOOR = "home/things/hallwayDoor";
-    String BATHROOM_AID_KIT = "home/things/bathroomAidKit";
-    String BATHROOM_CUPBOARD = "home/things/bathroomCupboard";
-    String KITCHEN_WINDOW = "home/things/kitchenWindow";
-    String KITCHEN_CUPBOARD = "home/things/kitchenCupboard";
-    String KITCHEN_FRIDGE = "home/things/kitchenFridge";
-    String KITCHEN_STOVE = "home/things/kitchenStove";
-    String STAIRCASE_UP_STAIRS = "home/things/staircaseUpStairs";
-
     //Home Items
-    String KITCHEN_CUPBOARD_KNIFE = "home/items/kitchenCupboardKnife";
+    String BEDROOM_WINDOW = "home/items/bedroomWindow";
+    String BEDROOM_BED = "home/items/bedroomBed";
     String BEDROOM_CLOCK = "home/items/bedroomClock";
+    String LIVING_ROOM_CUPBOARD = "home/items/livingRoomCupboard";
+    String LIVING_ROOM_WINDOW = "home/items/livingRoomWindow";
+    String HALLWAY_DOOR = "home/items/hallwayDoor";
+    String BATHROOM_CUPBOARD = "home/items/bathroomCupboard";
+    String BATHROOM_AID_KIT = "home/items/bathroomAidKit";
     String BATHROOM_AID_KIT_KEY = "home/items/bathroomAidKitKey";
+    String KITCHEN_WINDOW = "home/items/kitchenWindow";
+    String KITCHEN_CUPBOARD = "home/items/kitchenCupboard";
+    String KITCHEN_FRIDGE = "home/items/kitchenFridge";
+    String KITCHEN_STOVE = "home/items/kitchenStove";
+    String KITCHEN_CUPBOARD_KNIFE = "home/items/kitchenCupboardKnife";
+    String STAIRCASE_UP_STAIRS = "home/items/staircaseUpStairs";
 
     /* Street */
 

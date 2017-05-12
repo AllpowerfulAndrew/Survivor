@@ -3,15 +3,15 @@ package survivor.model.gameElements.sections.home;
 import org.apache.log4j.Logger;
 import survivor.model.gameBasics.Game;
 import survivor.model.gameBasics.Player;
-import survivor.model.gameElements.Elements;
+import survivor.model.gameElements.items.ContainableItem;
 import survivor.model.gameElements.sections.Section;
-import survivor.model.gameElements.things.CommonThing;
 import survivor.model.gameStatus.HomeStatus;
-import survivor.model.processing.*;
+import survivor.model.processing.Files;
+import survivor.model.processing.Reader;
 
 import java.util.ArrayList;
 
-public class HomeHallway extends Section implements Elements, Commands {
+public class HomeHallway extends Section {
     private static final Logger LOG = Logger.getLogger(HomeHallway.class);
 
     private final int IS_LOCKED = 1;
@@ -22,7 +22,7 @@ public class HomeHallway extends Section implements Elements, Commands {
         super(HomeStatus.HALLWAY, true, true);
         sectionDescriptions = Reader.readLocationFromFile(Files.HOME_HALLWAY);
 
-        sectionThings.add(new CommonThing(DOOR, new ArrayList<>(), false, Files.HALLWAY_DOOR));
+        sectionThings.add(new ContainableItem(DOOR, new ArrayList<>(), false, Files.HALLWAY_DOOR));
 
         addToAllDescriptions(SECTION, sectionDescriptions);
         addToAllDescriptions(DOOR, getAllDescriptionsOfThink(DOOR));

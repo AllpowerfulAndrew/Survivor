@@ -1,14 +1,16 @@
 package survivor.model.gameBasics;
 
-import survivor.model.gameElements.items.Item;
+import org.apache.log4j.Logger;
+import survivor.model.gameElements.items.TakeableItem;
 
 import java.util.ArrayList;
 
 public abstract class Player {
+    private static final Logger LOG = Logger.getLogger(Player.class);
     public static boolean hasClock;
     public static boolean hasThermometer;
     public static String location;
-    private static ArrayList<Item> inventory = new ArrayList<>();
+    private static ArrayList<TakeableItem> inventory = new ArrayList<>();
     private static int health;
 
     public static String showInventory() {
@@ -16,14 +18,14 @@ public abstract class Player {
 
         if (inventory.isEmpty()) return "Инвентарь пуст...";
 
-        for (Item item : inventory) {
+        for (TakeableItem item : inventory) {
             list += item.name + " (" + item.weight + " кг)\n";
         }
 
         return list;
     }
 
-    public static void putInInventory(Item item) {
+    public static void putInInventory(TakeableItem item) {
         if (inventory == null) inventory = new ArrayList<>();
         inventory.add(item);
     }
@@ -37,17 +39,22 @@ public abstract class Player {
     }
 
     public static boolean doesHaveItem(String name) {
+        LOG.info("Проверяем, есть ли такой предмет в инвентаре.");
         for (int i = 0; i < inventory.size(); i++) {
-            if (inventory.get(i).name.equals(name)) return true;
+            if (inventory.get(i).name.equals(name)) {
+                LOG.info("Такой предмет есть.");
+                return true;
+            }
         }
 
+        LOG.info("Такого предмета нет.");
         return false;
     }
 
-    public static Item dropAnItem(String name) {
+    public static TakeableItem dropAnItem(String name) {
         for (int i = 0; i < inventory.size(); i++) {
             if (inventory.get(i).name.equals(name)) {
-                Item item = inventory.get(i);
+                TakeableItem item = inventory.get(i);
                 inventory.remove(i);
                 return item;
             }

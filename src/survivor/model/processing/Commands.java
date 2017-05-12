@@ -24,8 +24,8 @@ public interface Commands {
     String OPEN_S = "отк";
     String USE = "использовать";
     String USE_S = "исп";
-    String INSPECT = "осмотреть";
-    String INSPECT_S = "осм";
+    String INSPECT = "изучить";
+    String INSPECT_S = "из";
     String TAKE = "взять";
     String TAKE_S = "вз";
     String DROP = "выбросить";
@@ -41,7 +41,7 @@ public interface Commands {
 
     String[] ALL = {
             "с", "север", "ю", "юг", "з", "запад", "в", "восток",
-            "осм", "осмотерться", "осмотреть", "вз", "взять", "выб", "выбросить",
+            "осм", "осмотерться", "из", "изучить", "вз", "взять", "выб", "выбросить",
             "исп", "использовать", "инв", "инвентарь", "помощь"
     };
 }

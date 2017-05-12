@@ -3,14 +3,15 @@ package survivor.model.gameElements.sections.home;
 import org.apache.log4j.Logger;
 import survivor.model.gameBasics.Game;
 import survivor.model.gameElements.Elements;
+import survivor.model.gameElements.items.ContainableItem;
 import survivor.model.gameElements.sections.Section;
-import survivor.model.gameElements.things.CommonThing;
 import survivor.model.gameStatus.HomeStatus;
-import survivor.model.processing.*;
+import survivor.model.processing.Files;
+import survivor.model.processing.Reader;
 
 import java.util.ArrayList;
 
-public class HomeStaircaseUp extends Section implements Elements, Commands {
+public class HomeStaircaseUp extends Section {
     private static final Logger LOG = Logger.getLogger(HomeStaircaseUp.class);
 
     private final int DISABLED = 1;
@@ -19,7 +20,7 @@ public class HomeStaircaseUp extends Section implements Elements, Commands {
 
     public HomeStaircaseUp() {
         super(HomeStatus.STAIRCASE_UP, true, false);
-        sectionThings.add(new CommonThing(STAIRS, new ArrayList<>(), false, Files.STAIRCASE_UP_STAIRS));
+        sectionThings.add(new ContainableItem(STAIRS, new ArrayList<>(), false, Files.STAIRCASE_UP_STAIRS));
         sectionDescriptions = Reader.readLocationFromFile(Files.HOME_STAIRCASE_UP);
 
         addToAllDescriptions(SECTION, sectionDescriptions);
@@ -29,6 +30,8 @@ public class HomeStaircaseUp extends Section implements Elements, Commands {
     public String otherInteraction(String[] command) {
         if (command.length == ONE) return oneCommand(command[FIRST]);
         if (command.length == TWO) return twoCommand(command);
+
+        for (int z = 0; z < 1; z++)
 
         LOG.warn("Такой команды нет!");
         return Game.incorrect;

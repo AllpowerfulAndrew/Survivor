@@ -2,12 +2,12 @@ package survivor.model.gameElements.sections.street;
 
 import org.apache.log4j.Logger;
 import survivor.model.gameBasics.Game;
-import survivor.model.gameElements.Elements;
 import survivor.model.gameElements.sections.Section;
 import survivor.model.gameStatus.StreetStatus;
-import survivor.model.processing.*;
+import survivor.model.processing.Files;
+import survivor.model.processing.Reader;
 
-public class StreetHome extends Section implements Elements, Commands {
+public class StreetHome extends Section {
     private static final Logger LOG = Logger.getLogger(StreetHome.class);
 
     public StreetHome() {

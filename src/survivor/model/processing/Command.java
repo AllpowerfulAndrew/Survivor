@@ -3,7 +3,7 @@ package survivor.model.processing;
 import org.apache.log4j.Logger;
 import survivor.model.gameBasics.Game;
 import survivor.model.gameBasics.Player;
-import survivor.model.gameElements.items.CommonItem;
+import survivor.model.gameElements.items.TakeableItem;
 import survivor.model.gameStatus.HomeStatus;
 import survivor.model.gameStatus.StreetStatus;
 
@@ -30,6 +30,6 @@ public abstract class Command implements Commands {
         if (command.equals("улица")) Game.status = StreetStatus.HOME;
         if (command.equals("крыша")) Game.status = HomeStatus.ROOF;
         if (command.equals("лестницы")) Game.status = HomeStatus.STAIRCASE_UP;
-        if (command.equals("топор")) Player.putInInventory(new CommonItem("топор", 4, "noFile"));
+        if (command.equals("топор")) Player.putInInventory(new TakeableItem("топор", 4, true, "noFile"));
     }
 }

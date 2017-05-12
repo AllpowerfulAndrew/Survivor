@@ -1,20 +1,17 @@
 package survivor.model.gameElements.sections.home;
 
 import org.apache.log4j.Logger;
-import survivor.model.gameElements.Elements;
-import survivor.model.gameElements.items.CommonItem;
-import survivor.model.gameElements.items.Item;
-import survivor.model.gameElements.sections.Section;
-import survivor.model.gameElements.things.CommonThing;
-import survivor.model.gameStatus.HomeStatus;
-import survivor.model.processing.Commands;
-import survivor.model.processing.Files;
 import survivor.model.gameBasics.Game;
+import survivor.model.gameElements.items.ContainableItem;
+import survivor.model.gameElements.items.TakeableItem;
+import survivor.model.gameElements.sections.Section;
+import survivor.model.gameStatus.HomeStatus;
+import survivor.model.processing.Files;
 import survivor.model.processing.Reader;
 
 import java.util.ArrayList;
 
-public class HomeKitchen extends Section implements Elements, Commands {
+public class HomeKitchen extends Section {
     private static final Logger LOG = Logger.getLogger(HomeKitchen.class);
 
     private final int IS_EMPTY = 1;
@@ -27,13 +24,13 @@ public class HomeKitchen extends Section implements Elements, Commands {
         super(HomeStatus.KITCHEN, true, true);
         sectionDescriptions = Reader.readLocationFromFile(Files.HOME_KITCHEN);
 
-        ArrayList<Item> cupboardItems = new ArrayList<>();
-        cupboardItems.add(new CommonItem(KNIFE, .8, Files.KITCHEN_CUPBOARD_KNIFE));
+        ArrayList<TakeableItem> cupboardItems = new ArrayList<>();
+        cupboardItems.add(new TakeableItem(KNIFE, .8, true, Files.KITCHEN_CUPBOARD_KNIFE));
 
-        sectionThings.add(new CommonThing(CUPBOARD, cupboardItems, true, Files.KITCHEN_CUPBOARD));
-        sectionThings.add(new CommonThing(STOVE, new ArrayList<>(), false, Files.KITCHEN_STOVE));
-        sectionThings.add(new CommonThing(FRIDGE, new ArrayList<>(), true, Files.KITCHEN_FRIDGE));
-        sectionThings.add(new CommonThing(WINDOW, new ArrayList<>(), false, Files.KITCHEN_WINDOW));
+        sectionThings.add(new ContainableItem(CUPBOARD, cupboardItems, true, Files.KITCHEN_CUPBOARD));
+        sectionThings.add(new ContainableItem(STOVE, new ArrayList<>(), false, Files.KITCHEN_STOVE));
+        sectionThings.add(new ContainableItem(FRIDGE, new ArrayList<>(), true, Files.KITCHEN_FRIDGE));
+        sectionThings.add(new ContainableItem(WINDOW, new ArrayList<>(), false, Files.KITCHEN_WINDOW));
 
         addToAllDescriptions(SECTION, sectionDescriptions);
         addToAllDescriptions(CUPBOARD, getAllDescriptionsOfThink(CUPBOARD));

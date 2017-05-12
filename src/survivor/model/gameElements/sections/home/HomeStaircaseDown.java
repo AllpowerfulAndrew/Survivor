@@ -1,15 +1,13 @@
 package survivor.model.gameElements.sections.home;
 
 import org.apache.log4j.Logger;
-import survivor.model.gameElements.Elements;
+import survivor.model.gameBasics.Game;
 import survivor.model.gameElements.sections.Section;
 import survivor.model.gameStatus.HomeStatus;
-import survivor.model.processing.Commands;
 import survivor.model.processing.Files;
-import survivor.model.gameBasics.Game;
 import survivor.model.processing.Reader;
 
-public class HomeStaircaseDown extends Section implements Elements, Commands {
+public class HomeStaircaseDown extends Section {
     private static final Logger LOG = Logger.getLogger(HomeStaircaseDown.class);
 
     public HomeStaircaseDown() {
