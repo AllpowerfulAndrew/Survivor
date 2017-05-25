@@ -1,17 +1,28 @@
 package survivor.model.gameBasics;
 
 import org.apache.log4j.Logger;
+import survivor.model.gameConstants.Feeling;
+import survivor.model.gameConstants.HealthStatus;
 import survivor.model.gameElements.items.TakeableItem;
 
 import java.util.ArrayList;
+import java.util.Random;
 
-public abstract class Player {
+import static survivor.model.gameConstants.Messages.ITEM_NOT_EXIST;
+
+public abstract class Player implements Feeling, HealthStatus {
     private static final Logger LOG = Logger.getLogger(Player.class);
+
     public static boolean hasClock;
     public static boolean hasThermometer;
+    public static boolean isAwake = true;
     public static String location;
     private static ArrayList<TakeableItem> inventory = new ArrayList<>();
-    private static int health;
+    private static int health = 100;
+    private static String healthStatus;
+    private static String feelStatus = RESTED;
+    private static double feelingParameter = 100;
+
 
     public static String showInventory() {
         String list = "";
@@ -35,7 +46,7 @@ public abstract class Player {
             if (inventory.get(i).name.equals(name)) return inventory.get(i).getDescription(0);
         }
 
-        return "Такого предмета нет в инвентаре...";
+        return ITEM_NOT_EXIST;
     }
 
     public static boolean doesHaveItem(String name) {
@@ -70,12 +81,43 @@ public abstract class Player {
     }
 
     public static void setHealth(int delta) {
-        health = health + delta;
+        health += delta;
         if (health > 100) health = 100;
         if (health < 0) health = 0;
     }
 
     public static int getHealth() {
         return health;
+    }
+
+    public static void increaseFeelingParameter() {
+        double parameter;
+        parameter = feelingParameter + Game.difficulty + 11.5;
+
+        if (parameter > 100) feelingParameter = 100;
+        else feelingParameter = parameter;
+    }
+
+    public static void decreaseFeelingParameter() {
+        double parameter;
+        parameter = feelingParameter - Game.difficulty * new Random().nextDouble();
+
+        if (parameter < 100) feelingParameter = 0;
+        else feelingParameter = parameter;
+    }
+
+    public void injured() {
+        if (healthStatus.equals(INJURED)) healthStatus = FATAL_INJURED;
+        else healthStatus = INJURED;
+    }
+
+    private void setFeeling() {
+
+    }
+
+    private void modHealth(int mod) {
+        health += mod;
+        if (health > 100) health = 100;
+        if (health < 100) health = 0;
     }
 }

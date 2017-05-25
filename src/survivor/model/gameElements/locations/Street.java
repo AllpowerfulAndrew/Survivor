@@ -2,7 +2,7 @@ package survivor.model.gameElements.locations;
 
 import survivor.model.gameElements.sections.street.StreetCrossroads;
 import survivor.model.gameElements.sections.street.StreetHome;
-import survivor.model.gameStatus.StreetStatus;
+import survivor.model.gameConstants.StreetStatus;
 
 public class Street extends Location {
     {

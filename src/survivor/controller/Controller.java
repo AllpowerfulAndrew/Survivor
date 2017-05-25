@@ -8,11 +8,14 @@ import javafx.scene.text.Text;
 import org.apache.log4j.Logger;
 import survivor.model.gameBasics.Game;
 import survivor.model.gameBasics.Player;
+import survivor.model.gameConstants.GameStatus;
+import survivor.model.gameConstants.StoryStatus;
 import survivor.model.processing.Command;
 
 import static survivor.model.gameBasics.Temperature.getAccurateTemperature;
 import static survivor.model.gameBasics.Temperature.getPerceivedTemperature;
 import static survivor.model.gameBasics.Time.*;
+import static survivor.model.gameConstants.Messages.INCORRECT;
 
 public class Controller {
     private static final Logger LOG = Logger.getLogger(Controller.class);
@@ -24,6 +27,8 @@ public class Controller {
     public Text temperature;
     public Text health;
     public Text day;
+    public Text feel;
+    public Text healthStatus;
 
     public void checkInput(KeyEvent key) {
         if (key.getCode() == KeyCode.ENTER) {
@@ -37,20 +42,26 @@ public class Controller {
         }
 
         if (key.getCode() == KeyCode.ESCAPE) {
+            if (Game.status.equals(GameStatus.MENU) || Game.status.equals(StoryStatus.INTRO)) return;
             Game.lastMessage = Game.actualSectionDescription;
             showText(Game.actualSectionDescription);
         }
     }
 
     private void showText(String text) {
-        if (text.equals(Game.incorrect)) lastInput.setStyle("-fx-border-color: brown; -fx-border-width: 3px");
+        if (text.equals(INCORRECT)) lastInput.setStyle("-fx-border-color: brown; -fx-border-width: 3px");
         else {
             lastInput.setStyle("-fx-border-width: 0px");
             Game.lastMessage = text;
-            setTimeAndDay();
-            setTemperature();
+            updateIndicators();
             textField.setText(text);
         }
+    }
+
+    private void updateIndicators() {
+        updateTimeAndDay();
+        updateTemperature();
+        updateHealth();
     }
 
     private void setLastInput(String input) {
@@ -58,14 +69,14 @@ public class Controller {
         else lastInput.setText(input + "\n" + Command.penultimateInput);
     }
 
-    private void setTimeAndDay() {
+    private void updateTimeAndDay() {
         if (Player.hasClock) time.setText(getTime());
         else if (Game.isTimingOn) time.setText(getDayTime());
 
         day.setText(getDay());
     }
 
-    private void setTemperature() {
+    private void updateTemperature() {
         if (Player.hasThermometer) {
 //            temperature.setStyle(getDegColor(getPerceivedTemperature()));
             temperature.setText(getAccurateTemperature() + "°");
@@ -73,5 +84,9 @@ public class Controller {
 //            temperature.setStyle(getDegColor(getPerceivedTemperature()));
             temperature.setText(getPerceivedTemperature());
         }
+    }
+
+    private void updateHealth() {
+        health.setText(Player.getHealth() + "%");
     }
 }

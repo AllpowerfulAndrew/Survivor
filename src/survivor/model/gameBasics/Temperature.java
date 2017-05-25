@@ -1,12 +1,12 @@
 package survivor.model.gameBasics;
 
 import org.apache.log4j.Logger;
-import survivor.model.gameStatus.TemperatureStatus;
+import survivor.model.gameConstants.TemperatureStatus;
 
 public abstract class Temperature implements TemperatureStatus {
     private static final Logger LOG = Logger.getLogger(Temperature.class);
 
-    private static int lastHour = 6;
+    private static int lastHour = 8;
 
     private static double temperature = 21;
 
@@ -14,7 +14,7 @@ public abstract class Temperature implements TemperatureStatus {
     private static double roomTemperature;
     private static double inhabitedTemperature;
 
-    private static double globalTemperature = 14;
+    private static double globalTemperature = 18;
     private static double changeSpeed = .7;
 
     public static void setTemperature(boolean isRoom, boolean inhabited) {
@@ -24,7 +24,11 @@ public abstract class Temperature implements TemperatureStatus {
         if (hour != lastHour) {
             lastHour = hour;
 
-            if (hour == 0) changeSpeed = (Math.random() + 5);
+            if (hour == 0) {
+                changeSpeed = ((Math.random() + 1) / 2);
+                LOG.info("Скорость изменения температуры поменялась на: " + changeSpeed);
+            }
+
             LOG.info("Высчитываем температуру. Изначальная: " + temperature);
 
             if (hour < 16 && hour > 3) globalTemperature += changeSpeed;

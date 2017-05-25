@@ -2,14 +2,16 @@ package survivor.model.gameElements.sections.home;
 
 import org.apache.log4j.Logger;
 import survivor.model.gameBasics.Game;
+import survivor.model.gameConstants.HomeStatus;
 import survivor.model.gameElements.items.ContainableItem;
 import survivor.model.gameElements.items.TakeableItem;
 import survivor.model.gameElements.sections.Section;
-import survivor.model.gameStatus.HomeStatus;
 import survivor.model.processing.Files;
 import survivor.model.processing.Reader;
 
 import java.util.ArrayList;
+
+import static survivor.model.gameConstants.Messages.INCORRECT;
 
 public class HomeBedroom extends Section {
     private static final Logger LOG = Logger.getLogger(HomeBedroom.class);
@@ -22,45 +24,26 @@ public class HomeBedroom extends Section {
         sectionThings.add(new ContainableItem(WINDOW, new ArrayList<>(), false, Files.BEDROOM_WINDOW));
         sectionThings.add(new ContainableItem(BED, new ArrayList<>(), false, Files.BEDROOM_BED));
 
-        addToAllDescriptions(SECTION, sectionDescriptions);
+        addToAllDescriptions(SECTION_NAME, sectionDescriptions);
         addToAllDescriptions(WINDOW, getAllDescriptionsOfThink(WINDOW));
         addToAllDescriptions(BED, getAllDescriptionsOfThink(BED));
         addToAllDescriptions(CLOCK, getAllDescriptionsOfItem(CLOCK));
     }
 
-    public String otherInteraction(String[] command) {
-        if (command.length == ONE) return oneCommand(command[FIRST]);
-        if (command.length == TWO) return twoCommand(command);
-
-        LOG.warn("Такой команды нет!");
-        return Game.incorrect;
+    @Override
+    public String south(String command) {
+        Game.status = HomeStatus.LIVING_ROOM;
+        return Game.mainInteraction(new String[]{command});
     }
 
-    private String oneCommand(String command) {
-        if ((command.equals(SOUTH) || command.equals(SOUTH_S)) && Game.status.equals(HomeStatus.BEDROOM))
-            if (isSectionDescriptionWasLastMessage()) {
-                Game.status = HomeStatus.LIVING_ROOM;
-                return Game.mainInteraction(new String[]{command});
-            }
+    @Override
+    public String inspect(String item) {
+        if (isSectionDescriptionWasLastMessage()) {
+            if (item.equals(WINDOW)) return getThingDescription(WINDOW, DESCRIPTION);
+            if (item.equals(BED)) return getThingDescription(BED, DESCRIPTION);
+            if (item.equals(CLOCK)) return getSectionItemDescription(CLOCK, DESCRIPTION);
+        }
 
-        if (command.equals(NORTH) || command.equals(NORTH_S) || command.equals(WEST) ||
-                command.equals(WEST_S) || command.equals(EAST) || command.equals(EAST_S))
-            if (isSectionDescriptionWasLastMessage())
-                return getSectionDescription(NO_WAY);
-
-        LOG.warn("Такой команды нет!");
-        return Game.incorrect;
-    }
-
-    private String twoCommand(String[] command) {
-        if (command[FIRST].equals(INSPECT) || command[FIRST].equals(INSPECT_S))
-            if (isSectionDescriptionWasLastMessage()) {
-                if (command[SECOND].equals(WINDOW)) return getThingDescription(WINDOW, DESCRIPTION);
-                if (command[SECOND].equals(BED)) return getThingDescription(BED, DESCRIPTION);
-                if (command[SECOND].equals(CLOCK)) return getSectionItemDescription(CLOCK, DESCRIPTION);
-            }
-
-        LOG.warn("Такой команды нет!");
-        return Game.incorrect;
+        return INCORRECT;
     }
 }

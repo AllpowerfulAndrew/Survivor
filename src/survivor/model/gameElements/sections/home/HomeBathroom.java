@@ -3,14 +3,16 @@ package survivor.model.gameElements.sections.home;
 import org.apache.log4j.Logger;
 import survivor.model.gameBasics.Game;
 import survivor.model.gameBasics.Player;
+import survivor.model.gameConstants.HomeStatus;
 import survivor.model.gameElements.items.ContainableItem;
 import survivor.model.gameElements.items.TakeableItem;
 import survivor.model.gameElements.sections.Section;
-import survivor.model.gameStatus.HomeStatus;
 import survivor.model.processing.Files;
 import survivor.model.processing.Reader;
 
 import java.util.ArrayList;
+
+import static survivor.model.gameConstants.Messages.INCORRECT;
 
 public class HomeBathroom extends Section {
     private static final Logger LOG = Logger.getLogger(HomeBathroom.class);
@@ -32,33 +34,38 @@ public class HomeBathroom extends Section {
         sectionThings.add(new ContainableItem(AID_KIT, items, false, Files.BATHROOM_AID_KIT));
         sectionThings.add(new ContainableItem(CUPBOARD_S, new ArrayList<>(), true, Files.BATHROOM_CUPBOARD));
 
-        addToAllDescriptions(SECTION, sectionDescriptions);
+        addToAllDescriptions(SECTION_NAME, sectionDescriptions);
         addToAllDescriptions(AID_KIT, getAllDescriptionsOfThink(AID_KIT));
         addToAllDescriptions(CUPBOARD_S, getAllDescriptionsOfThink(CUPBOARD_S));
         addToAllDescriptions(KEY, getAllDescriptionsOfThinkItem(AID_KIT, KEY));
     }
 
-    public String otherInteraction(String[] command) {
-        if (command.length == ONE) return oneCommand(command[FIRST]);
-        if (command.length == TWO) return twoCommand(command);
-
-        LOG.warn("Такой команды нет!");
-        return Game.incorrect;
+    @Override
+    public String south(String command) {
+        Game.status = HomeStatus.HALLWAY;
+        return Game.mainInteraction(new String[]{command});
     }
 
-    private String oneCommand(String command) {
-        if ((command.equals(SOUTH) || command.equals(SOUTH_S)) && Game.status.equals(HomeStatus.BATHROOM))
-            if (isSectionDescriptionWasLastMessage()) {
-                Game.status = HomeStatus.HALLWAY;
-                return Game.mainInteraction(new String[]{command});
-            }
+    @Override
+    public String inspect(String item) {
+        if (item.equals(AID_KIT_W))
+            if (isSectionDescriptionWasLastMessage() || isLastMessageWasDescriptionOf(AID_KIT))
+                return getThingDescription(AID_KIT, DESCRIPTION);
 
-        if (command.equals(NORTH) || command.equals(NORTH_S) || command.equals(WEST) || command.equals(WEST_S) ||
-                command.equals(EAST) || command.equals(EAST_S))
-            if (isSectionDescriptionWasLastMessage())
-                return getSectionDescription(NO_WAY);
+        if (item.equals(CUPBOARD_S))
+            if (isSectionDescriptionWasLastMessage() || isLastMessageWasDescriptionOf(CUPBOARD_S))
+                return getThingDescription(CUPBOARD_S, DESCRIPTION);
 
-        if (command.equals(OPEN) || command.equals(OPEN_S)) {
+        if (item.equals(KEY))
+            if (isLastMessageWasOfThink(AID_KIT, AID_OPENING) || isLastMessageWasOfThink(AID_KIT, WITH_KEY))
+                return getItemDescriptionOfThing(AID_KIT, KEY, DESCRIPTION);
+
+        return INCORRECT;
+    }
+
+    @Override
+    public String open(String item) {
+        if (item.equals(NO_NAME)) {
             if (isLastMessageWasOfThink(AID_KIT, DESCRIPTION))
                 return openAidKid();
 
@@ -66,44 +73,20 @@ public class HomeBathroom extends Section {
                 return openCupboard();
         }
 
-        if (command.equals(TAKE) || command.equals(TAKE_S))
-            if (isLastMessageWasOfItemOfThink(AID_KIT, KEY, DESCRIPTION))
-                return takeKey();
+        if (item.equals(AID_KIT_W))
+            if (isSectionDescriptionWasLastMessage() || isLastMessageWasDescriptionOf(AID_KIT))
+                return openAidKid();
 
-        LOG.warn("Такой команды нет!");
-        return Game.incorrect;
+        if (item.equals(CUPBOARD_S))
+            if (isSectionDescriptionWasLastMessage() || isLastMessageWasDescriptionOf(CUPBOARD_S))
+                return openCupboard();
+
+        return INCORRECT;
     }
 
-    private String twoCommand(String[] command) {
-        if (command[FIRST].equals(INSPECT) || command[FIRST].equals(INSPECT_S)) {
-            if (command[SECOND].equals(AID_KIT_W))
-                if (isSectionDescriptionWasLastMessage() || isLastMessageWasDescriptionOf(AID_KIT))
-                    return getThingDescription(AID_KIT, DESCRIPTION);
-
-            if (command[SECOND].equals(CUPBOARD_S))
-                if (isSectionDescriptionWasLastMessage() || isLastMessageWasDescriptionOf(CUPBOARD_S))
-                    return getThingDescription(CUPBOARD_S, DESCRIPTION);
-
-            if (command[SECOND].equals(KEY))
-                if (isLastMessageWasOfThink(AID_KIT, AID_OPENING) || isLastMessageWasOfThink(AID_KIT, WITH_KEY))
-                    return getItemDescriptionOfThing(AID_KIT, KEY, DESCRIPTION);
-        }
-
-        if (command[FIRST].equals(OPEN) || command[FIRST].equals(OPEN_S)) {
-            if (command[SECOND].equals(AID_KIT_W))
-                if (isSectionDescriptionWasLastMessage() || isLastMessageWasDescriptionOf(AID_KIT))
-                    return openAidKid();
-
-            if (command[SECOND].equals(CUPBOARD_S))
-                if (isSectionDescriptionWasLastMessage() || isLastMessageWasDescriptionOf(CUPBOARD_S))
-                    return openCupboard();
-        }
-
-        if (command[FIRST].equals(TAKE) || command[FIRST].equals(TAKE_S))
-            if (command[SECOND].equals(KEY))
-                return takeKey();
-
-        if ((command[FIRST].equals(USE) || command[FIRST].equals(USE_S)) && command[SECOND].equals(KNIFE))
+    @Override
+    public String use(String item) {
+        if (item.equals(KNIFE))
             if (isLastMessageWasOfThink(AID_KIT, DESCRIPTION) || isLastMessageWasOfThink(AID_KIT, IS_CLOSED))
                 if (Player.doesHaveItem(KNIFE)) {
                     Player.deleteItem(KNIFE);
@@ -111,8 +94,20 @@ public class HomeBathroom extends Section {
                     return getThingDescription(AID_KIT, AID_OPENING);
                 }
 
-        LOG.warn("Ошибочная команда!");
-        return Game.incorrect;
+        return INCORRECT;
+    }
+
+    @Override
+    public String take(String item) {
+        if (item.equals(NO_NAME)) {
+            if (isLastMessageWasOfItemOfThink(AID_KIT, KEY, DESCRIPTION))
+                return takeKey();
+        }
+
+        if (item.equals(KEY))
+            return takeKey();
+
+        return INCORRECT;
     }
 
     private String openAidKid() {
@@ -140,6 +135,6 @@ public class HomeBathroom extends Section {
         }
 
         LOG.warn("Ошибочная команда!");
-        return Game.incorrect;
+        return INCORRECT;
     }
 }

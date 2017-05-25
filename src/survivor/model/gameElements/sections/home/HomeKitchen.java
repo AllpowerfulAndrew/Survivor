@@ -5,11 +5,13 @@ import survivor.model.gameBasics.Game;
 import survivor.model.gameElements.items.ContainableItem;
 import survivor.model.gameElements.items.TakeableItem;
 import survivor.model.gameElements.sections.Section;
-import survivor.model.gameStatus.HomeStatus;
+import survivor.model.gameConstants.HomeStatus;
 import survivor.model.processing.Files;
 import survivor.model.processing.Reader;
 
 import java.util.ArrayList;
+
+import static survivor.model.gameConstants.Messages.INCORRECT;
 
 public class HomeKitchen extends Section {
     private static final Logger LOG = Logger.getLogger(HomeKitchen.class);
@@ -32,87 +34,76 @@ public class HomeKitchen extends Section {
         sectionThings.add(new ContainableItem(FRIDGE, new ArrayList<>(), true, Files.KITCHEN_FRIDGE));
         sectionThings.add(new ContainableItem(WINDOW, new ArrayList<>(), false, Files.KITCHEN_WINDOW));
 
-        addToAllDescriptions(SECTION, sectionDescriptions);
+        addToAllDescriptions(SECTION_NAME, sectionDescriptions);
         addToAllDescriptions(CUPBOARD, getAllDescriptionsOfThink(CUPBOARD));
         addToAllDescriptions(STOVE, getAllDescriptionsOfThink(STOVE));
         addToAllDescriptions(FRIDGE, getAllDescriptionsOfThink(FRIDGE));
         addToAllDescriptions(WINDOW, getAllDescriptionsOfThink(WINDOW));
     }
 
-    public String otherInteraction(String[] command) {
-        if (command.length == ONE) return oneCommand(command[FIRST]);
-        if (command.length == TWO) return twoCommand(command);
-
-        LOG.warn("Такой команды нет!");
-        return Game.incorrect;
+    @Override
+    public String east(String command) {
+        Game.status = HomeStatus.HALLWAY;
+        return Game.mainInteraction(new String[]{command});
     }
 
-    private String oneCommand(String command) {
-        if ((command.equals(EAST) || command.equals(EAST_S)) && Game.status.equals(HomeStatus.KITCHEN))
-            if (isSectionDescriptionWasLastMessage()) {
-                Game.status = HomeStatus.HALLWAY;
-                return Game.mainInteraction(new String[]{command});
-            }
+    @Override
+    public String inspect(String item) {
+        if (item.equals(KNIFE))
+            if (isLastMessageWasOfThink(CUPBOARD, CUPBOARD_WITH_KNIFE) || isLastMessageWasOfThink(CUPBOARD, TAKING_KNIFE))
+                return getItemDescriptionOfThing(CUPBOARD, KNIFE, DESCRIPTION);
 
-        if (command.equals(NORTH) || command.equals(NORTH_S) || command.equals(WEST) || command.equals(WEST_S) ||
-                command.equals(SOUTH) || command.equals(SOUTH_S))
-            if (isSectionDescriptionWasLastMessage())
-                return getSectionDescription(NO_WAY);
+        if (item.equals(CUPBOARD))
+            if (isSectionDescriptionWasLastMessage() || isLastMessageWasDescriptionOf(CUPBOARD))
+                return getThingDescription(CUPBOARD, DESCRIPTION);
 
-        if (command.equals(OPEN) || command.equals(OPEN_S)) {
+        if (item.equals(FRIDGE))
+            if (isSectionDescriptionWasLastMessage() || isLastMessageWasDescriptionOf(FRIDGE))
+                return getThingDescription(FRIDGE, DESCRIPTION);
+
+        if (item.equals(STOVE_W))
+            if (isSectionDescriptionWasLastMessage() || isLastMessageWasDescriptionOf(STOVE))
+                return getThingDescription(STOVE, DESCRIPTION);
+
+        if (item.equals(WINDOW))
+            if (isSectionDescriptionWasLastMessage() || isLastMessageWasDescriptionOf(WINDOW))
+                return getThingDescription(WINDOW, DESCRIPTION);
+
+        return INCORRECT;
+    }
+
+    @Override
+    public String open(String item) {
+        if (item.equals(NO_NAME)) {
             if (isLastMessageWasOfThink(FRIDGE, DESCRIPTION))
                 return getThingDescription(FRIDGE, IS_EMPTY);
+
             if (isLastMessageWasOfThink(CUPBOARD, DESCRIPTION))
                 return openCupboard();
         }
 
-        if (command.equals(TAKE) || command.equals(TAKE_S))
-            if (isLastMessageWasOfItemOfThink(CUPBOARD, KNIFE, DESCRIPTION))
-                return takeTheKnife();
+        if (item.equals(CUPBOARD))
+            if (isSectionDescriptionWasLastMessage() || isLastMessageWasDescriptionOf(CUPBOARD))
+                return openCupboard();
 
-        LOG.warn("Такой команды нет!");
-        return Game.incorrect;
+        if (item.equals(FRIDGE))
+            if (isSectionDescriptionWasLastMessage() || isLastMessageWasDescriptionOf(FRIDGE))
+                return getThingDescription(FRIDGE, IS_EMPTY);
+
+        return INCORRECT;
     }
 
-    private String twoCommand(String[] command) {
-        if (command[FIRST].equals(INSPECT) || command[FIRST].equals(INSPECT_S)) {
-            if (command[SECOND].equals(KNIFE))
-                if (isLastMessageWasOfThink(CUPBOARD, CUPBOARD_WITH_KNIFE) || isLastMessageWasOfThink(CUPBOARD, TAKING_KNIFE))
-                    return getItemDescriptionOfThing(CUPBOARD, KNIFE, DESCRIPTION);
-
-            if (command[SECOND].equals(CUPBOARD))
-                if (isSectionDescriptionWasLastMessage() || isLastMessageWasDescriptionOf(CUPBOARD))
-                    return getThingDescription(CUPBOARD, DESCRIPTION);
-
-            if (command[SECOND].equals(FRIDGE))
-                if (isSectionDescriptionWasLastMessage() || isLastMessageWasDescriptionOf(FRIDGE))
-                    return getThingDescription(FRIDGE, DESCRIPTION);
-
-            if (command[SECOND].equals(STOVE_W))
-                if (isSectionDescriptionWasLastMessage() || isLastMessageWasDescriptionOf(STOVE))
-                    return getThingDescription(STOVE, DESCRIPTION);
-
-            if (command[SECOND].equals(WINDOW))
-                if (isSectionDescriptionWasLastMessage() || isLastMessageWasDescriptionOf(WINDOW))
-                    return getThingDescription(WINDOW, DESCRIPTION);
-        }
-
-        if (command[FIRST].equals(OPEN) || command[FIRST].equals(OPEN_S)) {
-            if (command[SECOND].equals(CUPBOARD))
-                if (isSectionDescriptionWasLastMessage() || isLastMessageWasDescriptionOf(CUPBOARD))
-                    return openCupboard();
-
-            if (command[SECOND].equals(FRIDGE))
-                if (isSectionDescriptionWasLastMessage() || isLastMessageWasDescriptionOf(FRIDGE))
-                    return getThingDescription(FRIDGE, IS_EMPTY);
-        }
-
-        if (command[FIRST].equals(TAKE) || command[FIRST].equals(TAKE_S))
-            if (!isSectionDescriptionWasLastMessage() && command[SECOND].equals(KNIFE))
+    @Override
+    public String take(String item) {
+        if (item.equals(NO_NAME)) {
+            if (isLastMessageWasOfItemOfThink(CUPBOARD, KNIFE, DESCRIPTION))
                 return takeTheKnife();
+        }
 
-        LOG.warn("Такой команды нет!");
-        return Game.incorrect;
+        if (!isSectionDescriptionWasLastMessage() && item.equals(KNIFE))
+            return takeTheKnife();
+
+        return INCORRECT;
     }
 
     private String openCupboard() {
@@ -131,6 +122,6 @@ public class HomeKitchen extends Section {
         }
 
         LOG.warn("Ошибочная команда!");
-        return Game.incorrect;
+        return INCORRECT;
     }
 }

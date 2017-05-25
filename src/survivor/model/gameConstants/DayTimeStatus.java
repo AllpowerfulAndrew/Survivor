@@ -1,4 +1,4 @@
-package survivor.model.gameStatus;
+package survivor.model.gameConstants;
 
 public interface DayTimeStatus {
     String EARLY_MORNING = "Раннее утро";

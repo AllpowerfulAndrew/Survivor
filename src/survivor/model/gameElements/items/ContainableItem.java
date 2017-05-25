@@ -1,10 +1,11 @@
 package survivor.model.gameElements.items;
 
 import org.apache.log4j.Logger;
-import survivor.model.gameBasics.Game;
 import survivor.model.processing.Reader;
 
 import java.util.ArrayList;
+
+import static survivor.model.gameConstants.Messages.INCORRECT;
 
 public class ContainableItem extends Item {
     private static final Logger LOG = Logger.getLogger(ContainableItem.class);
@@ -46,7 +47,7 @@ public class ContainableItem extends Item {
         }
 
         LOG.warn("Такого предмета нет!");
-        return Game.incorrect;
+        return INCORRECT;
     }
 
     public boolean ifItemExist(String name) {

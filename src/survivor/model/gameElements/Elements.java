@@ -18,4 +18,6 @@ public interface Elements {
     String CLOCK = "часы";
     String KNIFE = "нож";
     String KEY = "ключ";
+
+    String NO_NAME = "ничего";
 }

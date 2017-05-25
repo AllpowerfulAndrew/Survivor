@@ -1,7 +1,7 @@
 package survivor.model.gameElements.locations;
 
 import survivor.model.gameElements.sections.home.*;
-import survivor.model.gameStatus.HomeStatus;
+import survivor.model.gameConstants.HomeStatus;
 
 public class Home extends Location {
     {

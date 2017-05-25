@@ -14,12 +14,11 @@ public class Main extends Application {
         primaryStage.setTitle("Survivor");
         primaryStage.setResizable(false);
 
-        Scene scene = new Scene(root, 1090, 640);
+        Scene scene = new Scene(root, 1090, 680);
         primaryStage.setScene(scene);
         scene.getStylesheets().add((Main.class.getResource("styles.css").toExternalForm()));
         primaryStage.show();
     }
-
 
     public static void main(String[] args) {
         launch(args);

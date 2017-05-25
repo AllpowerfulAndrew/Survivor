@@ -27,7 +27,7 @@
     -fx-highlight-fill: #009b00;
 }
 
-#timeLabel, #healthLabel, #temperatureLabel, #dayLabel {
+#timeLabel, #healthLabel, #temperatureLabel, #dayLabel, #weightLabel, #feelLabel, #healthStatusLabel {
     -fx-font-family: Calibri;
     -fx-font-size: 16px;
     -fx-text-fill: #fffdf1;
@@ -35,14 +35,14 @@
     -fx-background-color: #000000;
 }
 
-#parametersPanel, #dayPanel {
+#parametersPanel, #dayPanel, #characterPanel {
     -fx-border-width: 3px;
     -fx-border-color: black;
     -fx-border-radius: 5px;
     /*-fx-background-color: #a8a8a8;*/
 }
 
-#time, #health, #temperature {
+#time, #health, #temperature, #weight, #feel, #healthStatus {
     -fx-font-size: 14px;
     -fx-fill: #fff;
 

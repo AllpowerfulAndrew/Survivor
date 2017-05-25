@@ -2,14 +2,16 @@ package survivor.model.gameElements.sections.home;
 
 import org.apache.log4j.Logger;
 import survivor.model.gameBasics.Game;
+import survivor.model.gameConstants.HomeStatus;
 import survivor.model.gameElements.Elements;
 import survivor.model.gameElements.items.ContainableItem;
 import survivor.model.gameElements.sections.Section;
-import survivor.model.gameStatus.HomeStatus;
 import survivor.model.processing.Files;
 import survivor.model.processing.Reader;
 
 import java.util.ArrayList;
+
+import static survivor.model.gameConstants.Messages.INCORRECT;
 
 public class HomeStaircaseUp extends Section {
     private static final Logger LOG = Logger.getLogger(HomeStaircaseUp.class);
@@ -23,62 +25,45 @@ public class HomeStaircaseUp extends Section {
         sectionThings.add(new ContainableItem(STAIRS, new ArrayList<>(), false, Files.STAIRCASE_UP_STAIRS));
         sectionDescriptions = Reader.readLocationFromFile(Files.HOME_STAIRCASE_UP);
 
-        addToAllDescriptions(SECTION, sectionDescriptions);
+        addToAllDescriptions(SECTION_NAME, sectionDescriptions);
         addToAllDescriptions(STAIRS, getAllDescriptionsOfThink(STAIRS));
     }
 
-    public String otherInteraction(String[] command) {
-        if (command.length == ONE) return oneCommand(command[FIRST]);
-        if (command.length == TWO) return twoCommand(command);
+    @Override
+    public String north(String command) {
+        if (!getThingByName(Elements.STAIRS).isOpen) return getThingDescription(STAIRS, DISABLED);
 
-        for (int z = 0; z < 1; z++)
-
-        LOG.warn("Такой команды нет!");
-        return Game.incorrect;
+        Game.status = HomeStatus.ROOF;
+        return Game.mainInteraction(new String[]{command});
     }
 
-    private String oneCommand(String command) {
-        if ((command.equals(SOUTH) || command.equals(SOUTH_S)) && Game.status.equals(HomeStatus.STAIRCASE_UP))
-            if (isSectionDescriptionWasLastMessage()) {
-                Game.status = HomeStatus.STAIRCASE_DOWN;
-                return Game.mainInteraction(new String[]{command});
-            }
+    @Override
+    public String south(String command) {
+        Game.status = HomeStatus.STAIRCASE_DOWN;
+        return Game.mainInteraction(new String[]{command});
+    }
 
-        if ((command.equals(NORTH) || command.equals(NORTH_S)) && Game.status.equals(HomeStatus.STAIRCASE_UP)) {
-            if (!getThingByName(Elements.STAIRS).isOpen) return getThingDescription(STAIRS, DISABLED);
+    @Override
+    public String inspect(String item) {
+        if (item.equals(STAIRS))
+            if (isSectionDescriptionWasLastMessage() || isLastMessageWasDescriptionOf(STAIRS))
+                return getThingDescription(STAIRS, DESCRIPTION);
 
-            if (isSectionDescriptionWasLastMessage()) {
-                Game.status = HomeStatus.ROOF;
-                return Game.mainInteraction(new String[]{command});
-            }
-        }
+        return INCORRECT;
+    }
 
-        if (command.equals(WEST) || command.equals(WEST_S) || command.equals(EAST) || command.equals(EAST_S))
-            if (isSectionDescriptionWasLastMessage())
-                return getSectionDescription(NO_WAY);
-
-
-        if (command.equals(USE) || command.equals(USE_S))
+    @Override
+    public String use(String item) {
+        if (item.equals(NO_NAME)) {
             if (isLastMessageWasOfThink(STAIRS, DESCRIPTION) || isLastMessageWasOfThink(STAIRS, DISABLED))
                 return useStairs();
+        }
 
-        LOG.warn("Такой команды нет!");
-        return Game.incorrect;
-    }
+        if (item.equals(STAIRS))
+            if (isSectionDescriptionWasLastMessage() || isLastMessageWasDescriptionOf(STAIRS))
+                return useStairs();
 
-    private String twoCommand(String[] command) {
-        if (command[FIRST].equals(INSPECT) || command[FIRST].equals(INSPECT_S))
-            if (command[SECOND].equals(STAIRS))
-                if (isSectionDescriptionWasLastMessage() || isLastMessageWasDescriptionOf(STAIRS))
-                    return getThingDescription(STAIRS, DESCRIPTION);
-
-        if (command[FIRST].equals(USE) || command[FIRST].equals(USE_S))
-            if (command[SECOND].equals(STAIRS))
-                if (isSectionDescriptionWasLastMessage() || isLastMessageWasDescriptionOf(STAIRS))
-                    return useStairs();
-
-        LOG.warn("Такой команды нет!");
-        return Game.incorrect;
+        return INCORRECT;
     }
 
     private String useStairs() {
@@ -99,6 +84,6 @@ public class HomeStaircaseUp extends Section {
         }
 
         LOG.warn("Такой команды нет!");
-        return Game.incorrect;
+        return INCORRECT;
     }
 }

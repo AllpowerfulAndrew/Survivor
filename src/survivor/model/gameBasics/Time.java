@@ -1,17 +1,17 @@
 package survivor.model.gameBasics;
 
-import survivor.model.gameStatus.DayTimeStatus;
+import survivor.model.gameConstants.DayTimeStatus;
 
 public abstract class Time implements DayTimeStatus {
     private static String dayTime = DAWN;
 
     private static int DAY = 1;
-    private static int HOUR = 0;
+    private static int HOUR = 8;
 
-    private static int ACTUAL_HOUR = 6;
+    private static int ACTUAL_HOUR = 8;
     private static int ACTUAL_MINUTE = 0;
 
-    private static final int STEP = 5;
+    private static final int STEP = 50;
 
     public static void increaseTime() {
         if (Game.isTimingOn) increaseMinute((int) ((Math.random() + 1) * (Game.difficulty * STEP) / 2 + ACTUAL_MINUTE));
@@ -65,5 +65,9 @@ public abstract class Time implements DayTimeStatus {
 
     public static String getDay() {
         return String.valueOf(DAY);
+    }
+
+    public static int getAllHours() {
+        return HOUR;
     }
 }

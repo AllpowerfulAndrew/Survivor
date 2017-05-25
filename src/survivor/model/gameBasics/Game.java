@@ -1,24 +1,25 @@
 package survivor.model.gameBasics;
 
 import org.apache.log4j.Logger;
+import survivor.model.gameConstants.GameStatus;
+import survivor.model.gameConstants.HomeStatus;
+import survivor.model.gameConstants.StoryStatus;
 import survivor.model.gameElements.Elements;
 import survivor.model.gameElements.locations.Home;
 import survivor.model.gameElements.locations.Location;
 import survivor.model.gameElements.locations.Street;
-import survivor.model.gameStatus.GameStatus;
-import survivor.model.gameStatus.HomeStatus;
-import survivor.model.gameStatus.StoryStatus;
 import survivor.model.processing.Commands;
 import survivor.model.processing.Files;
 import survivor.model.processing.Reader;
 
 import java.util.ArrayList;
 
-public abstract class Game implements Commands, Elements{
+import static survivor.model.gameConstants.Messages.INCORRECT;
+
+public abstract class Game implements Commands, Elements {
     public static boolean isTimingOn;
     public static int difficulty = 1;
     private static final Logger LOG = Logger.getLogger(Game.class);
-    public static final String incorrect = "Неверная команда";
     public static String status = "Menu";
     private static String help = "";
     public static String message;
@@ -65,7 +66,7 @@ public abstract class Game implements Commands, Elements{
         }
 
         LOG.warn("Локация не найдена!");
-        return incorrect;
+        return INCORRECT;
     }
 
     private static String oneCommand(String command) {

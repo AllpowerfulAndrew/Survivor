@@ -3,12 +3,12 @@ package survivor.model.gameElements.sections;
 import org.apache.log4j.Logger;
 import survivor.model.gameBasics.Game;
 import survivor.model.gameBasics.Player;
+import survivor.model.gameConstants.HomeStatus;
+import survivor.model.gameConstants.StoryStatus;
 import survivor.model.gameElements.Elements;
 import survivor.model.gameElements.items.ContainableItem;
 import survivor.model.gameElements.items.Item;
 import survivor.model.gameElements.items.TakeableItem;
-import survivor.model.gameStatus.HomeStatus;
-import survivor.model.gameStatus.StoryStatus;
 import survivor.model.processing.Commands;
 
 import java.util.ArrayList;
@@ -17,6 +17,7 @@ import java.util.List;
 
 import static survivor.model.gameBasics.Temperature.setTemperature;
 import static survivor.model.gameBasics.Time.increaseTime;
+import static survivor.model.gameConstants.Messages.INCORRECT;
 
 public abstract class Section implements Commands, Elements {
     private static final Logger LOG = Logger.getLogger(Section.class);
@@ -27,7 +28,7 @@ public abstract class Section implements Commands, Elements {
 
     protected final int DESCRIPTION = 0;
 
-    public final String SECTION;
+    public final String SECTION_NAME;
     private final boolean IS_ROOM;
     private final boolean INHABITED;
     private List<TakeableItem> sectionItems;
@@ -41,7 +42,7 @@ public abstract class Section implements Commands, Elements {
         sectionItems = new ArrayList<>();
         droppedItems = new ArrayList<>();
         sectionDescriptions = new ArrayList<>();
-        SECTION = name;
+        SECTION_NAME = name;
         IS_ROOM = isRoom;
         INHABITED = inhabited;
     }
@@ -63,7 +64,7 @@ public abstract class Section implements Commands, Elements {
         }
 
         LOG.warn("Вещь не найдена!");
-        return null;
+        throw new IllegalArgumentException();
     }
 
     public Item getThingItemByName(String thing, String item) {
@@ -73,6 +74,7 @@ public abstract class Section implements Commands, Elements {
                     if (sectionThings.get(i).items.get(j).name.equals(item))
                         return sectionThings.get(i).items.get(j);
 
+        LOG.warn("Вещь не найдена!");
         throw new IllegalArgumentException();
     }
 
@@ -235,7 +237,7 @@ public abstract class Section implements Commands, Elements {
         LOG.info("Проверяем, не было ли описание секции последним сообщением");
         return (Game.lastMessage.equals(getSectionDescription(ENTER)) ||
                 Game.lastMessage.equals(getSectionDescription(AROUND)) ||
-                isLastMessageWasDescriptionOf(SECTION));
+                isLastMessageWasDescriptionOf(SECTION_NAME));
     }
 
     public boolean isLastMessageWasInventory() {
@@ -264,7 +266,7 @@ public abstract class Section implements Commands, Elements {
     }
 
     public String interaction(String[] command) {
-        LOG.info("Вошли в секцию " + SECTION);
+        LOG.info("Вошли в секцию " + SECTION_NAME);
         if (Game.status.equals(StoryStatus.INTRO)) {
             Player.location = HomeStatus.BEDROOM;
             Game.status = HomeStatus.BEDROOM;
@@ -272,8 +274,8 @@ public abstract class Section implements Commands, Elements {
             return getSectionDescription(ENTER);
         }
 
-        if (!Player.location.equals(SECTION)) {
-            Player.location = SECTION;
+        if (!Player.location.equals(SECTION_NAME)) {
+            Player.location = SECTION_NAME;
             setTemperature(IS_ROOM, INHABITED);
             increaseTime();
             return getSectionDescription(ENTER);
@@ -282,11 +284,29 @@ public abstract class Section implements Commands, Elements {
         if (command.length == ONE) return oneCommand(command[FIRST]);
         if (command.length == TWO) return twoCommand(command);
 
-        return otherInteraction(command);
+        return INCORRECT;
     }
 
     private String oneCommand(String command) {
-        return otherInteraction(new String[]{command});
+        if ((command.equals(NORTH) || command.equals(NORTH_S)) && Game.status.equals(SECTION_NAME) && isSectionDescriptionWasLastMessage())
+            return north(command);
+
+        if ((command.equals(SOUTH) || command.equals(SOUTH_S)) && Game.status.equals(SECTION_NAME) && isSectionDescriptionWasLastMessage())
+            return south(command);
+
+        if ((command.equals(WEST) || command.equals(WEST_S)) && Game.status.equals(SECTION_NAME) && isSectionDescriptionWasLastMessage())
+            return west(command);
+
+        if ((command.equals(EAST) || command.equals(EAST_S)) && Game.status.equals(SECTION_NAME) && isSectionDescriptionWasLastMessage())
+            return east(command);
+
+        if (command.equals(INSPECT) || command.equals(INVENTORY_S)) return inspect(NO_NAME);
+        if (command.equals(OPEN) || command.equals(OPEN_S)) return open(NO_NAME);
+        if (command.equals(USE) || command.equals(USE_S)) return use(NO_NAME);
+        if (command.equals(TAKE) || command.equals(TAKE_S)) return take(NO_NAME);
+
+        LOG.info("Неверная команда!");
+        return INCORRECT;
     }
 
     private String twoCommand(String[] command) {
@@ -296,16 +316,61 @@ public abstract class Section implements Commands, Elements {
                 return Player.getItemDescription(command[SECOND]);
         }
 
-        if (command[FIRST].equals(TAKE) || command[FIRST].equals(TAKE_S))
+        if (command[FIRST].equals(INSPECT) || command[FIRST].equals(INSPECT_S)) return inspect(command[SECOND]);
+        if (command[FIRST].equals(OPEN) || command[FIRST].equals(OPEN_S)) return open(command[SECOND]);
+        if (command[FIRST].equals(USE) || command[FIRST].equals(USE_S)) return use(command[SECOND]);
+
+        if (command[FIRST].equals(TAKE) || command[FIRST].equals(TAKE_S)) {
             if (isSectionDescriptionWasLastMessage() && isExistInDroppedItems(command[SECOND]))
                 return pickUpItem(command[SECOND]);
 
-        if (command[FIRST].equals(DROP) || command[FIRST].equals(DROP_S))
+            return take(command[SECOND]);
+        }
+
+        if (command[FIRST].equals(DROP) || command[FIRST].equals(DROP_S)) {
             if (isLastMessageWasInventory() || isSectionDescriptionWasLastMessage())
                 return dropAnItem(command[SECOND]);
 
-        return otherInteraction(command);
+            return drop(command[SECOND]);
+        }
+
+        LOG.info("Неверная команда!");
+        return INCORRECT;
     }
 
-    public abstract String otherInteraction(String[] command);
+    public String north(String command) {
+        return getSectionDescription(NO_WAY);
+    }
+
+    public String south(String command) {
+        return getSectionDescription(NO_WAY);
+    }
+
+    public String west(String command) {
+        return getSectionDescription(NO_WAY);
+    }
+
+    public String east(String command) {
+        return getSectionDescription(NO_WAY);
+    }
+
+    public String inspect(String item) {
+        return INCORRECT;
+    }
+
+    public String open(String item) {
+        return INCORRECT;
+    }
+
+    public String use(String item) {
+        return INCORRECT;
+    }
+
+    public String take(String item) {
+        return INCORRECT;
+    }
+
+    public String drop(String item) {
+        return INCORRECT;
+    }
 }

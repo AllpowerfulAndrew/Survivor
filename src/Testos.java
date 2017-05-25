@@ -1,6 +1,7 @@
 public class Testos {
     public static void main(String[] args) {
-        System.out.println(new Ex().opa());
+        for (int i = 0; i < 100; i++)
+            System.out.println((Math.random() + 1) / 2);
     }
 
     public static class Ex {

@@ -1,4 +1,4 @@
-package survivor.model.gameStatus;
+package survivor.model.gameConstants;
 
 public interface TemperatureStatus {
     String HOT = "Жарко";
