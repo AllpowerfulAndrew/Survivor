@@ -1,6 +1,6 @@
 package survivor.model.gameConstants;
 
-public interface Messages {
-    String ITEM_NOT_EXIST = "Такого предмета нет в инвентаре...";
-    String INCORRECT = "Неверная команда";
+public abstract class Messages {
+    public static final String ITEM_NOT_EXIST = "Такого предмета нет в инвентаре...";
+    public static final String INCORRECT = "Неверная команда";
 }

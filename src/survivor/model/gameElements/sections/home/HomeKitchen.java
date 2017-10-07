@@ -2,16 +2,17 @@ package survivor.model.gameElements.sections.home;
 
 import org.apache.log4j.Logger;
 import survivor.model.gameBasics.Game;
+import survivor.model.gameConstants.HomeStatus;
 import survivor.model.gameElements.items.ContainableItem;
 import survivor.model.gameElements.items.TakeableItem;
 import survivor.model.gameElements.sections.Section;
-import survivor.model.gameConstants.HomeStatus;
 import survivor.model.processing.Files;
 import survivor.model.processing.Reader;
 
 import java.util.ArrayList;
 
 import static survivor.model.gameConstants.Messages.INCORRECT;
+import static survivor.model.gameElements.Elements.*;
 
 public class HomeKitchen extends Section {
     private static final Logger LOG = Logger.getLogger(HomeKitchen.class);
@@ -80,7 +81,14 @@ public class HomeKitchen extends Section {
 
             if (isLastMessageWasOfThink(CUPBOARD, DESCRIPTION))
                 return openCupboard();
+
+            if (isLastMessageWasOfThink(STOVE, DESCRIPTION))
+                return openStove();
         }
+
+        if (item.equals(STOVE) || item.equals(STOVE_W))
+            if (isSectionDescriptionWasLastMessage() || isLastMessageWasDescriptionOf(CUPBOARD))
+                return openStove();
 
         if (item.equals(CUPBOARD))
             if (isSectionDescriptionWasLastMessage() || isLastMessageWasDescriptionOf(CUPBOARD))
@@ -95,10 +103,9 @@ public class HomeKitchen extends Section {
 
     @Override
     public String take(String item) {
-        if (item.equals(NO_NAME)) {
+        if (item.equals(NO_NAME))
             if (isLastMessageWasOfItemOfThink(CUPBOARD, KNIFE, DESCRIPTION))
                 return takeTheKnife();
-        }
 
         if (!isSectionDescriptionWasLastMessage() && item.equals(KNIFE))
             return takeTheKnife();
@@ -110,6 +117,10 @@ public class HomeKitchen extends Section {
         if (isThingIsEmpty(CUPBOARD)) {
             return getThingDescription(CUPBOARD, CUPBOARD_EMPTY);
         } else return getThingDescription(CUPBOARD, CUPBOARD_WITH_KNIFE);
+    }
+
+    private String openStove() {
+        return "Там ничего.";
     }
 
     private String takeTheKnife() {

@@ -1,10 +1,10 @@
 package survivor.model.gameConstants;
 
-public interface Feeling {
-    String RESTED = "Отдохнувший";
-    String VIGOROUS = "Энергичный";
-    String NORMAL = "Нормально";
-    String WEARY = "Утомлённый";
-    String TIRED = "Уставший";
-    String EXHAUSTED = "Изнурённый";
+public abstract class Feeling {
+    public static final String RESTED = "Отдохнувший";
+    public static final String VIGOROUS = "Энергичный";
+    public static final String NORMAL = "Нормально";
+    public static final String WEARY = "Утомлённый";
+    public static final String TIRED = "Уставший";
+    public static final String EXHAUSTED = "Изнурённый";
 }

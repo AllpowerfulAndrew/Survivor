@@ -4,19 +4,18 @@ import org.apache.log4j.Logger;
 import survivor.model.gameConstants.GameStatus;
 import survivor.model.gameConstants.HomeStatus;
 import survivor.model.gameConstants.StoryStatus;
-import survivor.model.gameElements.Elements;
 import survivor.model.gameElements.locations.Home;
 import survivor.model.gameElements.locations.Location;
 import survivor.model.gameElements.locations.Street;
-import survivor.model.processing.Commands;
 import survivor.model.processing.Files;
 import survivor.model.processing.Reader;
 
 import java.util.ArrayList;
 
 import static survivor.model.gameConstants.Messages.INCORRECT;
+import static survivor.model.processing.Commands.*;
 
-public abstract class Game implements Commands, Elements {
+public abstract class Game {
     public static boolean isTimingOn;
     public static int difficulty = 1;
     private static final Logger LOG = Logger.getLogger(Game.class);

@@ -9,7 +9,7 @@ import survivor.model.gameElements.items.TakeableItem;
 import static survivor.model.gameBasics.Game.isTimingOn;
 import static survivor.model.gameBasics.Player.*;
 
-public abstract class Command implements Commands {
+public abstract class Command {
     private static final Logger LOG = Logger.getLogger(Command.class);
     public static String penultimateInput = "";
 

@@ -12,6 +12,7 @@ import survivor.model.processing.Reader;
 import java.util.ArrayList;
 
 import static survivor.model.gameConstants.Messages.INCORRECT;
+import static survivor.model.gameElements.Elements.*;
 
 public class HomeBedroom extends Section {
     private static final Logger LOG = Logger.getLogger(HomeBedroom.class);

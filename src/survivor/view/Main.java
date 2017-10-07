@@ -14,7 +14,7 @@ public class Main extends Application {
         primaryStage.setTitle("Survivor");
         primaryStage.setResizable(false);
 
-        Scene scene = new Scene(root, 1090, 680);
+        Scene scene = new Scene(root, 1100, 690);
         primaryStage.setScene(scene);
         scene.getStylesheets().add((Main.class.getResource("styles.css").toExternalForm()));
         primaryStage.show();

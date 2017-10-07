@@ -2,11 +2,11 @@ package survivor.model.gameElements.items;
 
 public class TakeableItem extends Item {
     public final double weight;
-    public boolean isTakeble;
+    public boolean isTakeable;
 
-    public TakeableItem(String name, double weight, boolean isTakeble, String file) {
+    public TakeableItem(String name, double weight, boolean isTakeable, String file) {
         super(name, file);
         this.weight = weight;
-        this.isTakeble = isTakeble;
+        this.isTakeable = isTakeable;
     }
 }

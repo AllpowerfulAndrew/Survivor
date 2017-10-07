@@ -1,6 +1,6 @@
 package survivor.model.gameConstants;
 
-public interface StoryStatus {
-    String INTRO = "Intro";
-    String END = "End";
+public abstract class StoryStatus {
+    public static final String INTRO = "Intro";
+    public static final String END = "End";
 }

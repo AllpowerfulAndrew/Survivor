@@ -1,7 +1,7 @@
 package survivor.model.gameConstants;
 
-public interface GameStatus {
-    String MENU = "Menu";
-    String SAVING = "Saving";
-    String LOADING = "Loading";
+public abstract class GameStatus {
+    public static final String MENU = "Menu";
+    public static final String SAVING = "Saving";
+    public static final String LOADING = "Loading";
 }

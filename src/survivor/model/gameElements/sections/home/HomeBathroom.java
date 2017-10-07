@@ -13,6 +13,7 @@ import survivor.model.processing.Reader;
 import java.util.ArrayList;
 
 import static survivor.model.gameConstants.Messages.INCORRECT;
+import static survivor.model.gameElements.Elements.*;
 
 public class HomeBathroom extends Section {
     private static final Logger LOG = Logger.getLogger(HomeBathroom.class);
@@ -99,10 +100,9 @@ public class HomeBathroom extends Section {
 
     @Override
     public String take(String item) {
-        if (item.equals(NO_NAME)) {
+        if (item.equals(NO_NAME))
             if (isLastMessageWasOfItemOfThink(AID_KIT, KEY, DESCRIPTION))
                 return takeKey();
-        }
 
         if (item.equals(KEY))
             return takeKey();

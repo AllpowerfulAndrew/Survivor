@@ -2,8 +2,8 @@ package survivor.model.gameElements.sections.street;
 
 import org.apache.log4j.Logger;
 import survivor.model.gameBasics.Game;
-import survivor.model.gameElements.sections.Section;
 import survivor.model.gameConstants.StreetStatus;
+import survivor.model.gameElements.sections.Section;
 import survivor.model.processing.Files;
 import survivor.model.processing.Reader;
 

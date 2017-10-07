@@ -1,12 +1,12 @@
 package survivor.model.gameConstants;
 
-public interface HomeStatus {
-    String BEDROOM = "Home Bedroom";
-    String LIVING_ROOM = "Home Living Room";
-    String HALLWAY = "Home Hallway";
-    String BATHROOM = "Home Bathroom";
-    String KITCHEN = "Home Kitchen";
-    String STAIRCASE_DOWN = "Home Staircase Down";
-    String STAIRCASE_UP = "Home Staircase Up";
-    String ROOF = "Home Roof";
+public abstract class HomeStatus {
+    public static final String BEDROOM = "Home Bedroom";
+    public static final String LIVING_ROOM = "Home Living Room";
+    public static final String HALLWAY = "Home Hallway";
+    public static final String BATHROOM = "Home Bathroom";
+    public static final String KITCHEN = "Home Kitchen";
+    public static final String STAIRCASE_DOWN = "Home Staircase Down";
+    public static final String STAIRCASE_UP = "Home Staircase Up";
+    public static final String ROOF = "Home Roof";
 }

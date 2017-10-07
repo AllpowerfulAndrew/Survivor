@@ -12,6 +12,7 @@ import survivor.model.processing.Reader;
 import java.util.ArrayList;
 
 import static survivor.model.gameConstants.Messages.INCORRECT;
+import static survivor.model.gameElements.Elements.*;
 
 public class HomeHallway extends Section {
     private static final Logger LOG = Logger.getLogger(HomeHallway.class);
@@ -67,11 +68,10 @@ public class HomeHallway extends Section {
 
     @Override
     public String open(String item) {
-        if (item.equals(NO_NAME)) {
+        if (item.equals(NO_NAME))
             if (isLastMessageWasOfThink(DOOR, DESCRIPTION) || isLastMessageWasOfThink(DOOR, IS_LOCKED) ||
                     isLastMessageWasOfThink(DOOR, IS_OPEN))
                 return openDoor();
-        }
 
         if (item.equals(DOOR))
             if (isSectionDescriptionWasLastMessage() || isLastMessageWasDescriptionOf(DOOR))

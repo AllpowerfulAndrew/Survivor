@@ -12,9 +12,8 @@ public abstract class Story {
         if (intro.equals("")) {
             ArrayList<String> list = Reader.readLocationFromFile(Files.INTRO);
 
-            for (String line : list) {
-                intro = intro + line + "\n";
-            }
+            for (String line : list)
+                intro += line + "\n";
         }
 
         return intro;

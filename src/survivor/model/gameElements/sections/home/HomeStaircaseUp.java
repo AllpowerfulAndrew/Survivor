@@ -3,7 +3,6 @@ package survivor.model.gameElements.sections.home;
 import org.apache.log4j.Logger;
 import survivor.model.gameBasics.Game;
 import survivor.model.gameConstants.HomeStatus;
-import survivor.model.gameElements.Elements;
 import survivor.model.gameElements.items.ContainableItem;
 import survivor.model.gameElements.sections.Section;
 import survivor.model.processing.Files;
@@ -12,6 +11,8 @@ import survivor.model.processing.Reader;
 import java.util.ArrayList;
 
 import static survivor.model.gameConstants.Messages.INCORRECT;
+import static survivor.model.gameElements.Elements.NO_NAME;
+import static survivor.model.gameElements.Elements.STAIRS;
 
 public class HomeStaircaseUp extends Section {
     private static final Logger LOG = Logger.getLogger(HomeStaircaseUp.class);
@@ -31,7 +32,7 @@ public class HomeStaircaseUp extends Section {
 
     @Override
     public String north(String command) {
-        if (!getThingByName(Elements.STAIRS).isOpen) return getThingDescription(STAIRS, DISABLED);
+        if (!getThingByName(STAIRS).isOpen) return getThingDescription(STAIRS, DISABLED);
 
         Game.status = HomeStatus.ROOF;
         return Game.mainInteraction(new String[]{command});
@@ -54,10 +55,9 @@ public class HomeStaircaseUp extends Section {
 
     @Override
     public String use(String item) {
-        if (item.equals(NO_NAME)) {
+        if (item.equals(NO_NAME))
             if (isLastMessageWasOfThink(STAIRS, DESCRIPTION) || isLastMessageWasOfThink(STAIRS, DISABLED))
                 return useStairs();
-        }
 
         if (item.equals(STAIRS))
             if (isSectionDescriptionWasLastMessage() || isLastMessageWasDescriptionOf(STAIRS))
@@ -68,19 +68,21 @@ public class HomeStaircaseUp extends Section {
 
     private String useStairs() {
         if (isLastMessageWasOfThink(STAIRS, DESCRIPTION) ||
-                isLastMessageWasOfThink(STAIRS, DISABLED)) {
+                isLastMessageWasOfThink(STAIRS, DISABLED))
             if (!getThingByName(STAIRS).isOpen) {
                 getThingByName(STAIRS).isOpen = true;
                 return getThingDescription(STAIRS, USING);
-            } else return getThingDescription(STAIRS, ENABLED);
-        }
+            } else
+                return getThingDescription(STAIRS, ENABLED);
+
 
         if (isSectionDescriptionWasLastMessage()) {
             if (!getThingByName(STAIRS).isOpen) {
                 getThingByName(STAIRS).isOpen = true;
 
                 return getThingDescription(STAIRS, USING);
-            } else return getThingDescription(STAIRS, ENABLED);
+            } else
+                return getThingDescription(STAIRS, ENABLED);
         }
 
         LOG.warn("Такой команды нет!");

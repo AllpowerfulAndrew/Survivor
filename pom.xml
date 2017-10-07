@@ -10,20 +10,14 @@
 
     <properties>
         <jdk.version>1.8</jdk.version>
-        <richtextfx>LATEST</richtextfx>
+        <log4j.version>1.2.6</log4j.version>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>org.fxmisc.richtext</groupId>
-            <artifactId>richtextfx</artifactId>
-            <version>${richtextfx}</version>
-        </dependency>
-
-        <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
-            <version>1.2.6</version>
+            <version>${log4j.version}</version>
         </dependency>
     </dependencies>
 

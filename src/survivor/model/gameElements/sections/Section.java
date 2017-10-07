@@ -5,21 +5,19 @@ import survivor.model.gameBasics.Game;
 import survivor.model.gameBasics.Player;
 import survivor.model.gameConstants.HomeStatus;
 import survivor.model.gameConstants.StoryStatus;
-import survivor.model.gameElements.Elements;
 import survivor.model.gameElements.items.ContainableItem;
 import survivor.model.gameElements.items.Item;
 import survivor.model.gameElements.items.TakeableItem;
-import survivor.model.processing.Commands;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static survivor.model.gameBasics.Temperature.setTemperature;
-import static survivor.model.gameBasics.Time.increaseTime;
 import static survivor.model.gameConstants.Messages.INCORRECT;
+import static survivor.model.gameElements.Elements.NO_NAME;
+import static survivor.model.processing.Commands.*;
 
-public abstract class Section implements Commands, Elements {
+public abstract class Section {
     private static final Logger LOG = Logger.getLogger(Section.class);
 
     protected final int ENTER = 0;
@@ -29,8 +27,6 @@ public abstract class Section implements Commands, Elements {
     protected final int DESCRIPTION = 0;
 
     public final String SECTION_NAME;
-    private final boolean IS_ROOM;
-    private final boolean INHABITED;
     private List<TakeableItem> sectionItems;
     private List<TakeableItem> droppedItems;
     protected List<ContainableItem> sectionThings;
@@ -43,25 +39,21 @@ public abstract class Section implements Commands, Elements {
         droppedItems = new ArrayList<>();
         sectionDescriptions = new ArrayList<>();
         SECTION_NAME = name;
-        IS_ROOM = isRoom;
-        INHABITED = inhabited;
     }
 
     public Item getSectionThing(String name) {
-        for (Item i : sectionThings) {
-            if (i.name.equals(name)) {
+        for (Item i : sectionThings)
+            if (i.name.equals(name))
                 return i;
-            }
-        }
 
         throw new IllegalArgumentException();
     }
 
     public ContainableItem getThingByName(String name) {
         LOG.info("Получаем вещь по имени");
-        for (int i = 0; i < sectionThings.size(); i++) {
-            if (sectionThings.get(i).name.equals(name)) return sectionThings.get(i);
-        }
+        for (int i = 0; i < sectionThings.size(); i++)
+            if (sectionThings.get(i).name.equals(name))
+                return sectionThings.get(i);
 
         LOG.warn("Вещь не найдена!");
         throw new IllegalArgumentException();
@@ -116,11 +108,9 @@ public abstract class Section implements Commands, Elements {
     }
 
     public String getSectionItemDescription(String name, int num) {
-        for (Item i : sectionItems) {
-            if (i.name.equals(name)) {
+        for (Item i : sectionItems)
+            if (i.name.equals(name))
                 return i.getDescription(num);
-            }
-        }
 
         throw new IllegalArgumentException();
     }
@@ -134,7 +124,7 @@ public abstract class Section implements Commands, Elements {
     }
 
     public String getItemDescriptionOfThing(String thing, String item, int num) {
-        return getThingByName(thing).getItemDescription(item, num);
+        return getThingByName(thing).getAnItemDescription(item, num);
     }
 
     public ArrayList<String> getAllDescriptionsOfThink(String name) {
@@ -177,7 +167,7 @@ public abstract class Section implements Commands, Elements {
     }
 
     public void takeItemOfThing(String thing, String item) {
-        Player.putInInventory(getThingByName(thing).takeItem(item));
+        Player.putInInventory(getThingByName(thing).takeAnItem(item));
     }
 
     public String dropAnItem(String name) {
@@ -276,13 +266,14 @@ public abstract class Section implements Commands, Elements {
 
         if (!Player.location.equals(SECTION_NAME)) {
             Player.location = SECTION_NAME;
-            setTemperature(IS_ROOM, INHABITED);
-            increaseTime();
             return getSectionDescription(ENTER);
         }
 
-        if (command.length == ONE) return oneCommand(command[FIRST]);
-        if (command.length == TWO) return twoCommand(command);
+        if (command.length == ONE)
+            return oneCommand(command[FIRST]);
+
+        if (command.length == TWO)
+            return twoCommand(command);
 
         return INCORRECT;
     }
@@ -300,12 +291,19 @@ public abstract class Section implements Commands, Elements {
         if ((command.equals(EAST) || command.equals(EAST_S)) && Game.status.equals(SECTION_NAME) && isSectionDescriptionWasLastMessage())
             return east(command);
 
-        if (command.equals(INSPECT) || command.equals(INVENTORY_S)) return inspect(NO_NAME);
-        if (command.equals(OPEN) || command.equals(OPEN_S)) return open(NO_NAME);
-        if (command.equals(USE) || command.equals(USE_S)) return use(NO_NAME);
-        if (command.equals(TAKE) || command.equals(TAKE_S)) return take(NO_NAME);
+        if (command.equals(INSPECT) || command.equals(INVENTORY_S))
+            return inspect(NO_NAME);
 
-        LOG.info("Неверная команда!");
+        if (command.equals(OPEN) || command.equals(OPEN_S))
+            return open(NO_NAME);
+
+        if (command.equals(USE) || command.equals(USE_S))
+            return use(NO_NAME);
+
+        if (command.equals(TAKE) || command.equals(TAKE_S))
+            return take(NO_NAME);
+
+        LOG.info(INCORRECT);
         return INCORRECT;
     }
 
@@ -334,7 +332,7 @@ public abstract class Section implements Commands, Elements {
             return drop(command[SECOND]);
         }
 
-        LOG.info("Неверная команда!");
+        LOG.info(INCORRECT);
         return INCORRECT;
     }
 

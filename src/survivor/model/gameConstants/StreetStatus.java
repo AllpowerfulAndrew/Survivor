@@ -1,6 +1,6 @@
 package survivor.model.gameConstants;
 
-public interface StreetStatus {
-    String HOME = "Street Home";
-    String CROSSROADS = "Street Crossroads";
+public abstract class StreetStatus {
+    public static final String HOME = "Street Home";
+    public static final String CROSSROADS = "Street Crossroads";
 }

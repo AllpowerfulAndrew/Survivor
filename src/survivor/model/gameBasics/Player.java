@@ -1,16 +1,17 @@
 package survivor.model.gameBasics;
 
 import org.apache.log4j.Logger;
-import survivor.model.gameConstants.Feeling;
-import survivor.model.gameConstants.HealthStatus;
 import survivor.model.gameElements.items.TakeableItem;
 
 import java.util.ArrayList;
 import java.util.Random;
 
+import static survivor.model.gameConstants.Feeling.RESTED;
+import static survivor.model.gameConstants.HealthStatus.FATAL_INJURED;
+import static survivor.model.gameConstants.HealthStatus.INJURED;
 import static survivor.model.gameConstants.Messages.ITEM_NOT_EXIST;
 
-public abstract class Player implements Feeling, HealthStatus {
+public abstract class Player {
     private static final Logger LOG = Logger.getLogger(Player.class);
 
     public static boolean hasClock;

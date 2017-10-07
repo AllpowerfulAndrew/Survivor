@@ -11,6 +11,7 @@ import survivor.model.processing.Reader;
 import java.util.ArrayList;
 
 import static survivor.model.gameConstants.Messages.INCORRECT;
+import static survivor.model.gameElements.Elements.*;
 
 public class HomeLivingRoom extends Section {
     private static final Logger LOG = Logger.getLogger(HomeLivingRoom.class);
@@ -56,10 +57,9 @@ public class HomeLivingRoom extends Section {
 
     @Override
     public String open(String item) {
-        if (item.equals(NO_NAME)) {
+        if (item.equals(NO_NAME))
             if (isLastMessageWasOfThink(CUPBOARD, DESCRIPTION))
                 return getThingDescription(CUPBOARD, CUPBOARD_EMPTY);
-        }
 
         if (item.equals(CUPBOARD))
             if (isSectionDescriptionWasLastMessage() || isLastMessageWasDescriptionOf(CUPBOARD))

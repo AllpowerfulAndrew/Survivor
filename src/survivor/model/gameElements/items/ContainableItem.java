@@ -21,13 +21,13 @@ public class ContainableItem extends Item {
         description = Reader.readLocationFromFile(file);
     }
 
-    public TakeableItem takeItem(String name) {
+    public TakeableItem takeAnItem(String name) {
         TakeableItem item = null;
 
         LOG.info("Ищем предмет по имени");
         for (int i = 0; i < items.size(); i++) {
             if (items.get(i).name.equals(name)) {
-                LOG.info("Нужный предмет найден. Забираем его из вещи к себе в инвентарь.");
+                LOG.info("Нужный предмет найден. Забираем его себе в инвентарь.");
                 item = items.get(i);
                 items.remove(i);
                 break;
@@ -37,7 +37,7 @@ public class ContainableItem extends Item {
         return item;
     }
 
-    public String getItemDescription(String name, int num) {
+    public String getAnItemDescription(String name, int num) {
         LOG.info("Ищем предмет по имени");
         for (int i = 0; i < items.size(); i++) {
             if (items.get(i).name.equals(name)) {
