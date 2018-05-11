@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #2E3348;" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GameController">
+   <children>
+      <Pane layoutX="840.0" layoutY="10.0" prefHeight="670.0" prefWidth="350.0" style="-fx-border-radius: 5; -fx-border-color: #aaaaaa; -fx-background-color: #25273a; -fx-background-radius: 5;" />
+      <TextArea fx:id="outputField" editable="false" focusTraversable="false" layoutX="10.0" layoutY="10.0" mouseTransparent="true" prefHeight="670.0" prefWidth="820.0" style="-fx-highlight-text-fill: #000000; -fx-background-color: #aaaaaa; -fx-background-radius: 5; -fx-control-inner-background: #25273a; -fx-border-radius: 5; -fx-border-color: #25273a;" wrapText="true">
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+      </TextArea>
+      <TextField fx:id="inputField" layoutX="10.0" layoutY="690.0" prefHeight="30.0" prefWidth="1180.0" promptText="Введите команду..." style="-fx-text-fill: #aaaaaa; -fx-font-family: Consolas; -fx-background-color: #25273a; -fx-border-radius: 5; -fx-background-radius: 5; -fx-border-color: #aaaaaa;" />
+      <Label fx:id="lastInput" alignment="TOP_LEFT" layoutX="10.0" layoutY="730.0" prefHeight="60.0" prefWidth="1180.0" style="-fx-text-fill: #afada1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-border-color: #aaaaaa; -fx-background-color: #25273a;">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets></Label>
+   </children>
+</Pane>

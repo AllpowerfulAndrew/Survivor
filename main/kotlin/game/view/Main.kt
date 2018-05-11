@@ -1,12 +1,11 @@
 package game.view
 
 import javafx.application.Application
+import javafx.application.Application.launch
 import javafx.fxml.FXMLLoader
 import javafx.scene.Parent
 import javafx.scene.Scene
 import javafx.stage.Stage
-
-import java.io.File
 
 class Main : Application() {
     override fun start(primaryStage: Stage) {
@@ -23,7 +22,11 @@ class Main : Application() {
     companion object {
         @JvmStatic
         fun main(args: Array<String>) {
-            launch(Main::class.java)
+//            launch(Main::class.java)
+
+            "asd ".split(" ").forEach {
+                println(it.length)
+            }
         }
     }
 }

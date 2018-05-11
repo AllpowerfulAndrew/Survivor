@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #2E3348;" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SavesController">
+   <children>
+      <Button fx:id="backButton" cancelButton="true" layoutX="300.0" layoutY="700.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #2E3348; -fx-border-color: #aaaaaa; -fx-border-radius: 5; -fx-background-radius: 5;" text="НАЗАД" textFill="#b2b2b2">
+         <font>
+            <Font name="Helvetica Bold" size="24.0" />
+         </font>
+      </Button>
+      <Pane fx:id="saveParenPanel" layoutX="200.0" layoutY="50.0" prefHeight="450.0" prefWidth="800.0" style="-fx-border-radius: 5; -fx-border-color: #aaaaaa; -fx-background-color: #25273a; -fx-background-radius: 5;">
+         <children>
+            <Pane fx:id="firstSavePanel" layoutX="10.0" layoutY="10.0" prefHeight="210.0" prefWidth="385.0" style="-fx-border-radius: 5; -fx-border-color: #666666; -fx-background-color: #28283e; -fx-background-radius: 5;">
+               <children>
+                  <Label fx:id="firstEmptyLabel" layoutX="109.0" layoutY="77.0" text="ПУСТО" textFill="#666666">
+                     <font>
+                        <Font name="Helvetica" size="48.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane fx:id="secondSavePanel" layoutX="405.0" layoutY="10.0" prefHeight="210.0" prefWidth="385.0" style="-fx-border-radius: 5; -fx-border-color: #666666; -fx-background-color: #28283e; -fx-background-radius: 5;">
+               <children>
+                  <Label fx:id="secondEmptyLabel" layoutX="109.0" layoutY="77.0" text="ПУСТО" textFill="#666666">
+                     <font>
+                        <Font name="Helvetica" size="48.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane fx:id="thirdSavePanel" layoutX="10.0" layoutY="230.0" prefHeight="210.0" prefWidth="385.0" style="-fx-border-radius: 5; -fx-border-color: #666666; -fx-background-color: #28283e; -fx-background-radius: 5;">
+               <children>
+                  <Label fx:id="thirdEmptyLabel" layoutX="109.0" layoutY="77.0" text="ПУСТО" textFill="#666666">
+                     <font>
+                        <Font name="Helvetica" size="48.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane fx:id="fourthSavePanel" layoutX="405.0" layoutY="230.0" prefHeight="210.0" prefWidth="385.0" style="-fx-border-radius: 5; -fx-border-color: #666666; -fx-background-color: #28283e; -fx-background-radius: 5;">
+               <children>
+                  <Label fx:id="fourthEmptyLabel" layoutX="109.0" layoutY="77.0" text="ПУСТО" textFill="#666666">
+                     <font>
+                        <Font name="Helvetica" size="48.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+      <Pane fx:id="atosaveParentPanel" layoutX="200.0" layoutY="520.0" prefHeight="120.0" prefWidth="800.0" style="-fx-border-radius: 5; -fx-border-color: #aaaaaa; -fx-background-color: #25273a; -fx-background-radius: 5;">
+         <children>
+            <Pane fx:id="autosavePanel" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="780.0" style="-fx-border-radius: 5; -fx-border-color: #666666; -fx-background-color: #28283e; -fx-background-radius: 5;">
+               <children>
+                  <Label fx:id="autosaveEmptyLabel" layoutX="173.0" layoutY="28.0" text="НЕТ АВТОСОХРАНЕНИЙ" textFill="#666666">
+                     <font>
+                        <Font name="Helvetica" size="36.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+      <Button fx:id="loadButton" disable="true" layoutX="700.0" layoutY="700.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #2E3348; -fx-border-color: #aaaaaa; -fx-border-radius: 5;" text="ЗАГРУЗИТЬ" textFill="#b2b2b2">
+         <font>
+            <Font name="Helvetica Bold" size="24.0" />
+         </font>
+      </Button>
+   </children>
+</Pane>
