@@ -1,0 +1,128 @@
+placement|Home, Bathroom, Aid Kit
+key|Aid Kit
+containable
+name|Аптечка
+call|аптечку
+description|command: Investigate, open: False|Если бы не толстая пыль на аптечке, то она выглядела бы, как новая. Похоже, ею даже не пользовались, хотя от неё пахнет лекарствами.
+description|command: Open, open: False|Как назло, она закрыта. Конечно, можно попытаться её чем-то вскрыть.
+description|command: Open, open: True, empty: False|Аптечку уже не открыть, но её дверца погнута, а внутри виднеется какой-то ключ.
+description|command: Open, open: True, empty: True|Аптечку уже не открыть. В любом случае через погнутую дверцу видно, что там ничего интересно нет.
+description|command: Use, item: Knife, open: False|Вы небрежно начали ковырять ножом дверцу. Приложив усилия, Вы отогнули её верхнюю часть и через небольшую щель показался ключ на полочке. Надо же, нашли где прятать. Потом Вы обратили внимание на нож, которым вскрывали аптечку. Он был уже погнутым и отупел от ваших ковыряний. Вряд ли его можно ещё как-то использовать, потому Вы его выбросили.
+description|command: Take, item: Key, empty: False|Вы просунули руку в щель и забрали ключ. Удивительно, он такой холодный... (ESC)
+
+placement|Home, Bathroom, Aid Kit, Key
+key|Key
+takeable
+weight|0.02
+name|Ключ
+call|ключ
+description|command: Investigation|Это большой, красивый металлический ключ с интересными узорами. На вид, как будто сделан из серебра и на заказ. (ESC)
+
+placement|Home, Bathroom, Cupboard
+key|Cupboard
+containable
+name|Шкафчик
+call|шкафчик
+description|command: Investigation|Этот шкфчик сделан из прочного дерева. Дверца не закрывается, видимо магнитик испортился.
+description|command: Open|Тут много разных средств для дома. Упаковки мыла, салфеток и даже новенькие, но простые бритвы. В общем, ничего необычного. (ESC)
+
+placement|Home, Bedroom, Bed
+key|Bed
+name|Кровать
+call|кровать
+description|command: Investigation|Кровать покрыта пылью. На том месте, где Вы лежали виден отпечаток вашего тела. Постель простенькая, но чистая. По крайней мере, её чистота видна там, где Вы лежали. (ESC)
+
+placement|Home, Bedroom, Clock
+key|Clock
+name|Часы
+call|часы
+description|command: Investigation|Эти часы похожи на какой-то антиквариат. Красивая деревянная оправа с узорами сделана из красного дерева. Время они не показывают. Наверно, батарейка села. Стрелки указывают на 4:04. (ESC)
+
+placement|Home, Bedroom, Window
+key|Window
+name|Окно
+call|окно
+description|command: Investigation|Вы взглянули в окно. На улице никого нет. Вокруг много зелени. Видно, что сочные пучки травы пробиваются даже через трещины на дорогах. У тратуаров стоят машины со спущенными колёсами. Окна автомобилей грязные настолько, что через них ничего не разглядеть. Восходящее солнце светит ярко, но в окнах соседних домов темно настолько, что по телу проходит дрожь. Лучше туда больше не смотерть... (ESC)
+
+placement|Home, Hallway, Door
+key|Door
+name|Дверь
+call|дверь
+description|command: Investigation|Похоже, эта дверь ведёт к выходу из квартиры. Она очень прочная, сделана из стали. Такая качественная работа... Жаль, что нельзя забрать её с собой.
+description|command: Open, open: False|Дверь заперта. Без ключа нет шансов выбраться отсюда. (ESC)
+description|command: Open, open: True|Дверь уже не заперта. (ESC)
+description|command: Use, item: Key|Вы попробовали использовать ключ и он подошёл. Теперь дверь открыта! (ESC)
+
+placement|Home, Kitchen, Cupboard
+key|Cupboard
+containable
+name|Шкаф
+call|шкаф
+description|command: Investigation|Обычный кухонный шкаф. Стеклянные окошки на дверцах сделаны необычной разноцветной мозайкой.
+description|command: Open, contains: Knife|В шкафу Вы обнаружили много разной посуды, которая покрылась очень толстой пылью. Под стоящими тарелками лежит небольшой кухонный нож, который так же весь в пыли. Похоже, тут больше ничего нет.
+description|command: Take, item: Knife, contains: Knife|Вы забрали нож. Наверняка, он будет полезен. (ESC)
+description|Second Investigation|В шкафу много разной посуды, которая покрылась очень толстой пылью. Тут больше нет ничего интересного. (ESC)
+
+placement|Home, Kitchen, Cupboard, Knife
+key|Knife
+takeable
+weight|0.8
+name|Нож
+call|нож, кухонный нож
+description|First Investigation|Довольно острый, слегка изношенный нож из нержавеющей стали. Он довольно тяжёлый, а по виду и не скажешь... (ESC)
+
+placement|Home, Kitchen, Fridge
+key|Fridge
+containable
+name|Холодильник
+call|холодильник
+description|First Investigation|Этот холодильник высотой в два метра. Он, похоже, электронный. На дверце какая-то панель и кнопки, но ничего не работает.
+description|First Opening|Вы открыли холодильник. Там пусто. И даже запаха никакого нет. (ESC)
+
+placement|Home, Kitchen, Stove
+key|Stove
+containable
+name|Поита
+call|плита
+description|First Investigation|Эта плита видала и лучшие времена. Ручка от дверцы духовки треснута, но чем-то перемотана. Несмотря на то, что вся плита покрыта пылью, как и всё здесь вокруг, она выглядит чистой. Подача газа отключена. (ESC)
+
+placement|Home, Kitchen, Kitchen Window
+key|Kitchen Window
+name|Окно
+call|окно
+description|First Investigation|На подоконнике горшки с цветами. Точнее с тем, что от них осталось. Похоже они высохли очень давно. Вы посмотрели в окно и увидели ужасную картину. Напротив Вашего дома стоит другая многоэтажка, сгоревшая дотла. Вокруг её окон много копоти, а сами окна все разбиты и обгорели. На дорогах никого. Фонарный столб у здания упал прямо на машину и разрезал её практически пополам. Возможно из-за пожара что-то подорвалось и свалило столб. (ESC)
+
+placement|Home, Living Room, Cupboard
+key|Cupboard
+containable
+name|Шкаф
+call|шкаф
+description|First Investigation|Этому шкафу явно много лет и он сделан из качественного дерева. Дверцы без замков, без ручек и приоткрыты.
+description|First Opening|Тут разная старая одежда. Внизу даже обувь припрятанная видна. Похоже, её даже не носили. (ESC)
+
+placement|Home, Living Room, Window
+key|Window
+name|Окно
+call|окно
+description|First Investigation|Окно прикрыто шторами. Лучше их не трогать, а то в них можно запутаться. (ESC)
+
+placement|Home, Staircase Up, Stairs
+key|Stairs
+name|Лестницы
+call|лестницы
+description|First Investigation|Это старые лестницы, которые ведут на крышу. Похоже они покрыты ржавчиной, но ещё рабочие.
+description|First Action|Лестницы сложены. Надо их разложить, чтобы по ним пройти.
+description|use|Потянув вниз, Вы опустили со скрипом старые лестницы. Большая радость, что они не развалились. (ESC)
+description|use|Лестницы уже разложены. Ими можно воспользоваться. (ESC)
+
+placement|Street, Crossroads, Car
+key|Car
+name|Машина
+call|машину
+description|First Investigation|Этот автомобиль весь заржавел. Владелец решил вместо разбитого заднего стекла понаклеить клеёнки. Ужас... как не эстетично. Стекло водительской двери припущено, но сама дверь закрыта. На багажнике и капоте сильно облезла краска. Все колёса спущены а сами диски заржавели. Из машины пахнет чем-то тухлым.
+
+placement|Street, Fire Escape, Barricades
+key|Barricades
+name|Баррикады
+call|баррикады
+description|First Investigation|Дрога напроч перекрыта разного рода хламом. Тут автомобили на автомобилях, мусорные баки и даже магазинная тележка на самом верху кучи. Тут даже бетонные плиты есть! Интересно, откуда это всё? (ESC)

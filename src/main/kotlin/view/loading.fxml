@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #2E3348;" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoadingController">
+   <children>
+      <ProgressIndicator fx:id="loadingProgressBar" layoutX="550.0" layoutY="341.0" prefHeight="119.0" prefWidth="112.0" />
+      <Label fx:id="loadingLabel" layoutX="510.0" layoutY="507.0" text="Загрузка..." textFill="#b1b1b1">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+   </children>
+</Pane>

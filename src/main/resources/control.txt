@@ -1,0 +1,15 @@
+message|(Пустая команда)| (Неверная команда)| (Нельзя совмещать одиночную команду с другими словами)| (Введён не праильный предмет)| (Вы забыли ввести предмет)
+
+mono-command|north|север|с
+mono-command|south|юг|ю
+mono-command|west|залад|з
+mono-command|east|восток|в
+mono-command|look around|осмотреться|осм
+mono-command|inventory|инветарь|инв
+mono-command|help|помощь|пом
+
+multi-command|investigate|изучить|из
+multi-command|open|открыть|отк
+multi-command|use|использовать|исп
+multi-command|take|взять|вз
+multi-command|drop|выбросить|выб
